@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Importar PDF</title>
+  <style>
+    .upload-btn {
+      padding: 10px 20px;
+      background-color: #4f46e5;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #file-name {
+      margin-top: 10px;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <h2>Importar PDF:</h2>
+  <input type="file" id="pdfInput" accept="application/pdf" style="display:none">
+  <button class="upload-btn" onclick="document.getElementById('pdfInput').click()">Selecionar PDF</button>
+  <div id="file-name"></div>
+
+  <script>
+    const input = document.getElementById('pdfInput');
+    const fileName = document.getElementById('file-name');
+
+    input.addEventListener('change', function () {
+      if (input.files.length > 0) {
+        fileName.textContent = `Arquivo selecionado: ${input.files[0].name}`;
+      }
+    });
+  </script>
+
+</body>
+</html>
