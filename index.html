@@ -1,41 +1,226 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Importar PDF</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ficha de Produção</title>
   <style>
-    .upload-btn {
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 30px;
+    }
+
+    .logo {
+      max-height: 70px;
+    }
+
+    .form-group {
+      margin-bottom: 15px;
+    }
+
+    label {
+      font-weight: bold;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 8px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .row {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .row .form-group {
+      flex: 1;
+      min-width: 200px;
+    }
+
+    .section-title {
+      margin: 25px 0 10px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .signature {
+      display: flex;
+      justify-content: space-between;
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .signature-box {
+      border-top: 1px solid #000;
+      text-align: center;
+      padding-top: 5px;
+      width: 100%;
+    }
+
+    #preview-images img {
+      height: 80px;
+      margin: 5px;
+    }
+
+    button {
+      margin-top: 20px;
       padding: 10px 20px;
-      background-color: #4f46e5;
+      background: #007bff;
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 6px;
       cursor: pointer;
     }
 
-    #file-name {
-      margin-top: 10px;
-      font-style: italic;
+    button:hover {
+      background: #0056b3;
     }
   </style>
 </head>
 <body>
 
-  <h2>Importar PDF:</h2>
-  <input type="file" id="pdfInput" accept="application/pdf" style="display:none">
-  <button class="upload-btn" onclick="document.getElementById('pdfInput').click()">Selecionar PDF</button>
-  <div id="file-name"></div>
+<div class="container" id="ficha">
+  <div class="header">
+    <img src="logo.png" alt="Logo da Empresa" class="logo" />
+    <h2>Ficha de Produção</h2>
+  </div>
 
-  <script>
-    const input = document.getElementById('pdfInput');
-    const fileName = document.getElementById('file-name');
+  <form id="formulario">
+    <div class="row">
+      <div class="form-group">
+        <label>N° da Ficha de Produção:</label>
+        <input type="text" name="ficha" />
+      </div>
+      <div class="form-group">
+        <label>Data:</label>
+        <input type="date" name="data" />
+      </div>
+    </div>
 
-    input.addEventListener('change', function () {
-      if (input.files.length > 0) {
-        fileName.textContent = `Arquivo selecionado: ${input.files[0].name}`;
-      }
+    <div class="form-group">
+      <label>Quantidade a verificar:</label>
+      <input type="number" name="qtd_verificar" />
+    </div>
+
+    <div class="form-group">
+      <label>Quando executar a inspeção:</label>
+      <input type="text" name="inspecao" />
+    </div>
+
+    <div class="section-title">Informações do Produto</div>
+    <div class="row">
+      <div class="form-group">
+        <label>Descrição do Produto:</label>
+        <input type="text" name="descricao" />
+      </div>
+      <div class="form-group">
+        <label>Lote:</label>
+        <input type="text" name="lote" />
+      </div>
+      <div class="form-group">
+        <label>Data:</label>
+        <input type="date" name="data_prod" />
+      </div>
+      <div class="form-group">
+        <label>Quant:</label>
+        <input type="number" name="quant" />
+      </div>
+    </div>
+
+    <div class="section-title">Ensaio Realizado</div>
+    <div class="form-group">
+      <label>Ensaio:</label>
+      <input type="text" name="ensaio" value="Ensaio de estanqueidade da junta elastomérica" readonly />
+    </div>
+    <div class="row">
+      <div class="form-group">
+        <label>Amostra:</label>
+        <input type="text" name="amostra" />
+      </div>
+      <div class="form-group">
+        <label>Métodos ISO:</label>
+        <input type="text" name="metodos" />
+      </div>
+      <div class="form-group">
+        <label>Resultado:</label>
+        <input type="text" name="resultado" />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Observações:</label>
+      <textarea rows="3" name="obs"></textarea>
+    </div>
+
+    <div class="form-group">
+      <label>Adicionar Fotos:</label>
+      <input type="file" id="fotoUpload" accept="image/*" multiple />
+      <div id="preview-images"></div>
+    </div>
+
+    <div class="signature">
+      <div class="signature-box">Responsável pelos testes</div>
+      <div class="signature-box">Responsável pela verificação</div>
+    </div>
+
+    <button type="button" onclick="gerarPDF()">Gerar PDF</button>
+  </form>
+</div>
+
+<!-- html2pdf CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+<script>
+  function gerarPDF() {
+    const elemento = document.getElementById("ficha");
+    const opt = {
+      margin:       0.5,
+      filename:     'ficha-producao.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2 },
+      jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(elemento).save();
+  }
+
+  // Pré-visualização de imagens
+  document.getElementById("fotoUpload").addEventListener("change", function () {
+    const preview = document.getElementById("preview-images");
+    preview.innerHTML = "";
+    Array.from(this.files).forEach(file => {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        const img = document.createElement("img");
+        img.src = e.target.result;
+        preview.appendChild(img);
+      };
+      reader.readAsDataURL(file);
     });
-  </script>
+  });
+</script>
 
 </body>
 </html>
