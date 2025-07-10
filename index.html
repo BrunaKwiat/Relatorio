@@ -142,8 +142,23 @@
             Exportar como PDF
         </button>
     </div>
+        <form class="form-inline">
+  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preferência</label>
+  <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+    <option selected>Escolher...</option>
+    <option value="1">Um</option>
+    <option value="2">Dois</option>
+    <option value="3">Três</option>
+  </select>
 
-    <script>
+    <div class="custom-control custom-checkbox my-1 mr-sm-2">
+         <input type="checkbox" class="custom-control-input" id="customControlInline">
+         <label class="custom-control-label" for="customControlInline">Lembrar preferências</label>
+     </div>
+
+    <button type="submit" class="btn btn-primary my-1">Enviar</button>
+</form>
+    <!--<script>
         // Initial test data
         const initialTests = [
             { ensaio: 'Pressão Hidrostática (PHI)', amostras: '03', metodo: '0,5 Kgf/cm² × 5 min', resultado: 'APROVADO' },
@@ -214,6 +229,6 @@
             };
             html2pdf().set(opt).from(elemento).save();
         }
-    </script>
+    </script>-->
 </body>
 </html>
