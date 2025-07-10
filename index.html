@@ -142,93 +142,160 @@
             Exportar como PDF
         </button>
     </div>
-        <form class="form-inline">
-  <label class="my-1 mr-2" for="inlineFormCustomSelectPref">Preferência</label>
-  <select class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-    <option selected>Escolher...</option>
-    <option value="1">Um</option>
-    <option value="2">Dois</option>
-    <option value="3">Três</option>
-  </select>
+   
+   <script>
+    // Initial test data
+    const initialTests = [
+        { ensaio: 'Pressão Hidrostática (PHI)', amostras: '03', metodo: '0,5 Kgf/cm² × 5 min', resultado: 'APROVADO' },
+        { ensaio: 'Pressão Hidrostática (Junta elástica)', amostras: '03', metodo: '2 Kgf/cm² × 10 min', resultado: 'APROVADO' },
+        { ensaio: 'Vácuo', amostras: '03', metodo: '0,5 Kgf/cm² × 15 min', resultado: 'APROVADO' },
+        { ensaio: 'Dimensional', amostras: '08', metodo: 'Gabarito', resultado: 'APROVADO' },
+        { ensaio: 'Marcações', amostras: '08', metodo: 'Visual', resultado: 'APROVADO' },
+        { ensaio: 'Achatamento', amostras: 'N/A', metodo: 'Prensa de (20% ↔ 30%)', resultado: 'N/A' },
+        { ensaio: 'Comportamento ao calor', amostras: 'N/A', metodo: '150º +/- 2º × 30 min', resultado: 'N/A' },
+    ];
 
-    <div class="custom-control custom-checkbox my-1 mr-sm-2">
-         <input type="checkbox" class="custom-control-input" id="customControlInline">
-         <label class="custom-control-label" for="customControlInline">Lembrar preferências</label>
-     </div>
+    // Options for 'Ensaio Realizado' dropdown
+    const ensaioOptions = [
+        "Pressão Hidrostática (PHI)",
+        "Pressão Hidrostática (Junta elástica)",
+        "Vácuo",
+        "Dimensional",
+        "Marcações",
+        "Achatamento",
+        "Comportamento ao calor",
+        "Outro" // Added for flexibility if a test isn't in the list
+    ];
 
-    <button type="submit" class="btn btn-primary my-1">Enviar</button>
-</form>
-    <!--<script>
-        // Initial test data
-        const initialTests = [
-            { ensaio: 'Pressão Hidrostática (PHI)', amostras: '03', metodo: '0,5 Kgf/cm² × 5 min', resultado: 'APROVADO' },
-            { ensaio: 'Pressão Hidrostática (Junta elástica)', amostras: '03', metodo: '2 Kgf/cm² × 10 min', resultado: 'APROVADO' },
-            { ensaio: 'Vácuo', amostras: '03', metodo: '0,5 Kgf/cm² × 15 min', resultado: 'APROVADO' },
-            { ensaio: 'Dimensional', amostras: '08', metodo: 'Gabarito', resultado: 'APROVADO' },
-            { ensaio: 'Marcações', amostras: '08', metodo: 'Visual', resultado: 'APROVADO' },
-            { ensaio: 'Achatamento', amostras: 'N/A', metodo: 'Prensa de (20% ↔ 30%)', resultado: 'N/A' },
-            { ensaio: 'Comportamento ao calor', amostras: 'N/A', metodo: '150º +/- 2º × 30 min', resultado: 'N/A' },
-        ];
+    // Options for 'Resultado' dropdown
+    const resultadoOptions = [
+        "APROVADO",
+        "REPROVADO",
+        "N/A"
+    ];
 
-        document.addEventListener('DOMContentLoaded', () => {
-            initialTests.forEach(test => addTestRow(test));
+    document.addEventListener('DOMContentLoaded', () => {
+        initialTests.forEach(test => addTestRow(test));
+    });
+
+    function addTestRow(test = {}) {
+        const tableBody = document.getElementById('testResultsTableBody');
+        const newRow = tableBody.insertRow();
+        newRow.classList.add('border-b', 'border-gray-200'); // Add border to separate rows
+
+        const rowCount = tableBody.rows.length;
+        if (rowCount % 2 === 1) { // Check if it's an odd row for alternating background
+            newRow.classList.add('table-row-odd');
+        }
+
+        const ensaioCell = newRow.insertCell();
+        const amostrasCell = newRow.insertCell();
+        const metodoCell = newRow.insertCell();
+        const resultadoCell = newRow.insertCell();
+        const actionsCell = newRow.insertCell();
+
+        ensaioCell.classList.add('border', 'p-3');
+        amostrasCell.classList.add('border', 'p-3');
+        metodoCell.classList.add('border', 'p-3');
+        resultadoCell.classList.add('border', 'p-3');
+        actionsCell.classList.add('border', 'p-3', 'text-center');
+
+        // Create select element for Ensaio
+        let ensaioSelectHtml = `<select class="form-input-table ensaio-select">`;
+        ensaioOptions.forEach(option => {
+            const selected = (test.ensaio === option) ? 'selected' : '';
+            ensaioSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
         });
+        ensaioSelectHtml += `</select>`;
+        ensaioCell.innerHTML = ensaioSelectHtml;
 
-        function addTestRow(test = {}) {
-            const tableBody = document.getElementById('testResultsTableBody');
-            const newRow = tableBody.insertRow();
-            newRow.classList.add('border-b', 'border-gray-200'); // Add border to separate rows
+        amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}" placeholder="Amostras"/>`;
+        metodoCell.innerHTML = `<input type="text" class="form-input-table" value="${test.metodo || ''}" placeholder="Método"/>`;
 
-            const rowCount = tableBody.rows.length;
-            if (rowCount % 2 === 1) { // Check if it's an odd row for alternating background
-                newRow.classList.add('table-row-odd');
+        // Create select element for Resultado
+        let resultadoSelectHtml = `<select class="form-input-table resultado-select">`;
+        resultadoOptions.forEach(option => {
+            const selected = (test.resultado === option) ? 'selected' : '';
+            resultadoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
+        });
+        resultadoSelectHtml += `</select>`;
+        resultadoCell.innerHTML = resultadoSelectHtml;
+
+        actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
+
+        // Apply a more compact style to inputs and selects within the table
+        const tableInputs = newRow.querySelectorAll('.form-input-table');
+        tableInputs.forEach(element => { // Renamed from input to element as it can be select now
+            element.style.padding = '0.5rem';
+            element.style.border = '1px solid #e5e7eb';
+            element.style.borderRadius = '0.25rem';
+            element.style.width = '100%';
+            element.style.boxSizing = 'border-box';
+        });
+    }
+
+    function removeTestRow(button) {
+        const row = button.closest('tr');
+        row.remove();
+    }
+
+    function gerarPDF() {
+        // Before generating PDF, replace select elements with their selected text values
+        const tableBody = document.getElementById('testResultsTableBody');
+        const clonedTableBody = tableBody.cloneNode(true); // Clone to avoid modifying the live DOM
+
+        clonedTableBody.querySelectorAll('tr').forEach(row => {
+            // Ensaio cell
+            const ensaioSelect = row.querySelector('.ensaio-select');
+            if (ensaioSelect) {
+                const ensaioText = document.createElement('span');
+                ensaioText.textContent = ensaioSelect.value;
+                ensaioSelect.replaceWith(ensaioText);
             }
 
-            const ensaioCell = newRow.insertCell();
-            const amostrasCell = newRow.insertCell();
-            const metodoCell = newRow.insertCell();
-            const resultadoCell = newRow.insertCell();
-            const actionsCell = newRow.insertCell();
+            // Resultado cell
+            const resultadoSelect = row.querySelector('.resultado-select');
+            if (resultadoSelect) {
+                const resultadoText = document.createElement('span');
+                resultadoText.textContent = resultadoSelect.value;
+                resultadoSelect.replaceWith(resultadoText);
+            }
 
-            ensaioCell.classList.add('border', 'p-3');
-            amostrasCell.classList.add('border', 'p-3');
-            metodoCell.classList.add('border', 'p-3');
-            resultadoCell.classList.add('border', 'p-3');
-            actionsCell.classList.add('border', 'p-3', 'text-center');
-
-            ensaioCell.innerHTML = `<input type="text" class="form-input-table" value="${test.ensaio || ''}" placeholder="Ensaio"/>`;
-            amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}" placeholder="Amostras"/>`;
-            metodoCell.innerHTML = `<input type="text" class="form-input-table" value="${test.metodo || ''}" placeholder="Método"/>`;
-            resultadoCell.innerHTML = `<input type="text" class="form-input-table" value="${test.resultado || ''}" placeholder="Resultado"/>`;
-            actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
-
-            // Apply a more compact style to inputs within the table
-            const tableInputs = newRow.querySelectorAll('.form-input-table');
-            tableInputs.forEach(input => {
-                input.style.padding = '0.5rem';
-                input.style.border = '1px solid #e5e7eb';
-                input.style.borderRadius = '0.25rem';
-                input.style.width = '100%';
-                input.style.boxSizing = 'border-box';
+            // Input fields (Amostras, Método)
+            row.querySelectorAll('.form-input-table').forEach(input => {
+                const inputText = document.createElement('span');
+                inputText.textContent = input.value;
+                input.replaceWith(inputText);
             });
-        }
 
-        function removeTestRow(button) {
-            const row = button.closest('tr');
-            row.remove();
-        }
+            // Remove actions cell for PDF
+            const actionsCell = row.querySelector('.remove-row-button')?.closest('td');
+            if (actionsCell) {
+                actionsCell.remove();
+            }
+        });
 
-        function gerarPDF() {
-            const elemento = document.getElementById('formulario');
-            const opt = {
-                margin:       0.5,
-                filename:     'registro_inspecao.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(elemento).save();
-        }
-    </script>-->
+        // Temporarily replace the original table body with the modified clone
+        const originalTableBody = document.getElementById('testResultsTableBody');
+        originalTableBody.parentNode.replaceChild(clonedTableBody, originalTableBody);
+        clonedTableBody.id = 'tempTestResultsTableBody'; // Give the clone a temporary ID
+
+        const elemento = document.getElementById('formulario');
+        const opt = {
+            margin:       0.5,
+            filename:     'registro_inspecao.pdf',
+            image:        { type: 'jpeg', quality: 0.98 },
+            html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true },
+            jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+        };
+
+        html2pdf().set(opt).from(elemento).save().then(() => {
+            // After PDF generation, restore the original table body
+            const tempTableBody = document.getElementById('tempTestResultsTableBody');
+            originalTableBody.id = 'testResultsTableBody'; // Restore original ID
+            tempTableBody.parentNode.replaceChild(originalTableBody, tempTableBody);
+        });
+    }
+</script>
 </body>
 </html>
