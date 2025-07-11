@@ -293,7 +293,14 @@
             row.remove();
         }
 
-        ffunction gerarPDF() {
+         <div class="text-center mt-6">
+             <button onclick="gerarPDF()" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow">
+                 Exportar como PDF
+             </button>
+         </div>
+
+
+    function gerarPDF() {
       const elemento = document.getElementById('formulario');
       const opt = {
         margin:       0.5,
@@ -304,6 +311,7 @@
       };
       html2pdf().set(opt).from(elemento).save();
     }
-  </script>
+
+</script>
 </body>
 </html>
