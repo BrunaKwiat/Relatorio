@@ -247,35 +247,35 @@
             actionsCell.classList.add('border', 'p-3', 'text-center');
 
             // Create select element for Ensaio
-            let ensaioSelectHtml = <select class="form-input-table ensaio-select">;
+            let ensaioSelectHtml = `<select class="form-input-table ensaio-select">`;
             ensaioOptions.forEach(option => {
                 const selected = (test.ensaio === option) ? 'selected' : '';
-                ensaioSelectHtml += <option value="${option}" ${selected}>${option}</option>;
+                ensaioSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
             });
-            ensaioSelectHtml += </select>;
+            ensaioSelectHtml += `</select>`;
             ensaioCell.innerHTML = ensaioSelectHtml;
 
-            amostrasCell.innerHTML = <input type="text" class="form-input-table" value="${test.amostras || ''}" placeholder="Amostras"/>;
+            amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}" placeholder="Amostras"/>`;
             
             // Create select element for Metodo
-            let metodoSelectHtml = <select class="form-input-table metodo-select">;
+            let metodoSelectHtml = `<select class="form-input-table metodo-select">`;
             metodoOptions.forEach(option => {
                 const selected = (test.metodo === option) ? 'selected' : '';
-                metodoSelectHtml += <option value="${option}" ${selected}>${option}</option>;
+                metodoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
             });
-            metodoSelectHtml += </select>;
+            metodoSelectHtml += `</select>`;
             metodoCell.innerHTML = metodoSelectHtml;
 
             // Create select element for Resultado
-            let resultadoSelectHtml = <select class="form-input-table resultado-select">;
+            let resultadoSelectHtml = `<select class="form-input-table resultado-select">`;
             resultadoOptions.forEach(option => {
                 const selected = (test.resultado === option) ? 'selected' : '';
-                resultadoSelectHtml += <option value="${option}" ${selected}>${option}</option>;
+                resultadoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
             });
-            resultadoSelectHtml += </select>;
+            resultadoSelectHtml += `</select>`;
             resultadoCell.innerHTML = resultadoSelectHtml;
 
-            actionsCell.innerHTML = <button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>;
+            actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
 
             // Apply a more compact style to inputs and selects within the table
             const tableInputs = newRow.querySelectorAll('.form-input-table');
@@ -344,11 +344,11 @@
                 if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
                     const textSpan = document.createElement('span');
                     textSpan.textContent = input.value;
-                    textSpan.style.display = 'block'; //Manter exibição em nível de bloco
-                    textSpan.style.padding = '0.76rem'; // Corresponder ao preenchimento do campo de entrada
-                    textSpan.style.border = '1px solid #d1d5db'; // Igualar a borda ao campo de entrada
-                    textSpan.style.borderRadius = '0.375rem'; // Usar o mesmo arredondamento de borda do campo de entrada
-                    textSpan.style.backgroundColor = '#f9fafb'; // Fundo claro para texto estático
+                    textSpan.style.display = 'block'; // Maintain block-level display
+                    textSpan.style.padding = '0.75rem'; // Match input padding
+                    textSpan.style.border = '1px solid #d1d5db'; // Match input border
+                    textSpan.style.borderRadius = '0.375rem'; // Match input border-radius
+                    textSpan.style.backgroundColor = '#f9fafb'; // Light background for static text
                     input.replaceWith(textSpan);
                 }
             });
