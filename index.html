@@ -293,82 +293,17 @@
             row.remove();
         }
 
-        function gerarPDF() {
-            // Before generating PDF, replace select elements with their selected text values
-            const tableBody = document.getElementById('testResultsTableBody');
-            // Clone the entire form element to work on a detached DOM node
-            const clonedForm = document.getElementById('formulario').cloneNode(true);
-            const clonedTableBody = clonedForm.querySelector('#testResultsTableBody');
-
-            clonedTableBody.querySelectorAll('tr').forEach(row => {
-                // Ensaio cell
-                const ensaioSelect = row.querySelector('.ensaio-select');
-                if (ensaioSelect) {
-                    const ensaioText = document.createElement('span');
-                    ensaioText.textContent = ensaioSelect.value;
-                    ensaioSelect.replaceWith(ensaioText);
-                }
-
-                // Resultado cell
-                const resultadoSelect = row.querySelector('.resultado-select');
-                if (resultadoSelect) {
-                    const resultadoText = document.createElement('span');
-                    resultadoText.textContent = resultadoSelect.value;
-                    resultadoSelect.replaceWith(resultadoText);
-                }
-
-                // Método cell (added this for completeness as it's a select now)
-                const metodoSelect = row.querySelector('.metodo-select');
-                if (metodoSelect) {
-                    const metodoText = document.createElement('span');
-                    metodoText.textContent = metodoSelect.value;
-                    metodoSelect.replaceWith(metodoText);
-                }
-
-                // Input fields (Amostras) - make sure to target only inputs, not selects again
-                row.querySelectorAll('input.form-input-table').forEach(input => {
-                    const inputText = document.createElement('span');
-                    inputText.textContent = input.value;
-                    input.replaceWith(inputText);
-                });
-
-                // Remove actions cell for PDF
-                const actionsCell = row.querySelector('.remove-row-button')?.closest('td');
-                if (actionsCell) {
-                    actionsCell.remove();
-                }
-            });
-
-            // Also replace main form inputs with their values for PDF
-            clonedForm.querySelectorAll('.form-input').forEach(input => {
-                if (input.tagName === 'INPUT' || input.tagName === 'TEXTAREA') {
-                    const textSpan = document.createElement('span');
-                    textSpan.textContent = input.value;
-                    textSpan.style.display = 'block'; // Maintain block-level display
-                    textSpan.style.padding = '0.75rem'; // Match input padding
-                    textSpan.style.border = '1px solid #d1d5db'; // Match input border
-                    textSpan.style.borderRadius = '0.375rem'; // Match input border-radius
-                    textSpan.style.backgroundColor = '#f9fafb'; // Light background for static text
-                    input.replaceWith(textSpan);
-                }
-            });
-
-            const opt = {
-                margin:       0.5,
-                filename:     'registro_inspecao.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, logging: true, dpi: 192, letterRendering: true, useCORS: true },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
-
-            // Use the cloned form element for PDF generation
-            html2pdf().set(opt).from(clonedForm).save().then(() => {
-                console.log('PDF gerado com sucesso!');
-                // No need to restore original DOM as we worked on a clone
-            }).catch(error => {
-                console.error('Erro ao gerar PDF:', error);
-            });
-        }
-    </script>
+        ffunction gerarPDF() {
+      const elemento = document.getElementById('formulario');
+      const opt = {
+        margin:       0.5,
+        filename:     'registro_inspecao.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+      };
+      html2pdf().set(opt).from(elemento).save();
+    }
+  </script>
 </body>
 </html>
