@@ -231,6 +231,15 @@
         resultadoSelectHtml += `</select>`;
         resultadoCell.innerHTML = resultadoSelectHtml;
 
+        // Create select element for Metodo
+        let metodoSelectHtml = `<select class="form-input-table metodo-select">`;
+        metodoOptions.forEach(option => {
+            const selected = (test.metodo === option) ? 'selected' : '';
+            metodoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
+        });
+        metodoSelectHtml += `</select>`;
+        metodoCell.innerHTML = metodoSelectHtml;
+
         actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
 
         // Apply a more compact style to inputs and selects within the table
