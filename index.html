@@ -173,7 +173,17 @@
         "REPROVADO",
         "N/A"
     ];
-
+     // Options for 'Método' dropdown
+    const metodoOptions = [
+        "0,5 Kgf/cm² × 5 min",
+        "2 Kgf/cm² × 10 min",
+        "0,5 Kgf/cm² × 15 min",
+        "Gabarito",
+        "Visual",
+        "Prensa de (20% ↔ 30%)",
+        "0,5 Kgf/cm² × 15 min",
+        "150º +/- 2º × 30 min"
+    ];
     document.addEventListener('DOMContentLoaded', () => {
         initialTests.forEach(test => addTestRow(test));
     });
