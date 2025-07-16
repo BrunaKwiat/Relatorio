@@ -7,184 +7,239 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
-        /* Custom styles for better aesthetics */
+        /* Custom print-optimized styles */
+        @media print {
+            body {
+                background-color: white !important;
+                color: black !important;
+                font-size: 12pt;
+            }
+            .no-print {
+                display: none !important;
+            }
+            .page-break {
+                page-break-after: always;
+            }
+            .avoid-break {
+                page-break-inside: avoid;
+            }
+            table {
+                page-break-inside: avoid;
+            }
+        }
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc; /* Light background */
+            background-color: #f8fafc;
             color: #333;
-            line-height: 1.6;
+            line-height: 1.4;
         }
+        
+        #formulario {
+            background-color: white;
+            max-width: 210mm; /* A4 width */
+            margin: 0 auto;
+            padding: 15mm;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        
         .form-label {
             display: block;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.3rem;
             color: #333;
             font-weight: 600;
+            font-size: 0.9rem;
         }
+        
         .form-input {
             width: 100%;
-            padding: 0.75rem;
+            padding: 0.5rem;
             border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
+            border-radius: 0.25rem;
             box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            background-color: #ffffff; /* Ensure white background for inputs */
+            font-size: 0.9rem;
         }
-        .form-input:focus {
-            border-color: #3b82f6;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
-        }
+        
         .section-heading {
-            border-bottom: 2px solid #e5e7eb;
+            border-bottom: 1px solid #e5e7eb;
             padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
+            margin: 1.5rem 0 1rem;
             color: #1f2937;
-        }
-        .table-header th {
-            background-color: #e0e7ff; /* Light blue */
-            color: #1f2937;
+            font-size: 1.1rem;
             font-weight: 700;
-            padding: 0.75rem;
+        }
+        
+        .table-header th {
+            background-color: #f0f4ff;
+            color: #1f2937;
+            font-weight: 600;
+            padding: 0.5rem;
+            font-size: 0.8rem;
             text-align: left;
         }
-        .table-row-odd {
-            background-color: #f9fafb; /* Lightest gray for alternating rows */
+        
+        .table-row td {
+            padding: 0.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 0.8rem;
         }
+        
+        .table-row-odd {
+            background-color: #f9fafb;
+        }
+        
         .add-row-button {
-            background-color: #22c55e; /* Green */
+            background-color: #22c55e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+        }
+        
+        .remove-row-button {
+            background-color: #ef4444;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 0.25rem;
+            font-size: 0.7rem;
+        }
+        
+        .pdf-button {
+            background-color: #3b82f6;
             color: white;
             padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-        .add-row-button:hover {
-            background-color: #16a34a; /* Darker green */
-        }
-        .remove-row-button {
-            background-color: #ef4444; /* Red */
-            color: white;
-            padding: 0.375rem 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
-        }
-        .remove-row-button:hover {
-            background-color: #dc2626; /* Darker red */
-        }
-        .pdf-button {
-            background-color: #007bff; /* Blue for PDF button */
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        .pdf-button:hover {
-            background-color: #0056b3; /* Darker blue */
-        }
-        /* Styles for inputs/selects inside the table */
-        .form-input-table {
-            padding: 0.5rem;
-            border: 1px solid #e5e7eb;
             border-radius: 0.25rem;
+            font-weight: 600;
+            margin: 1rem auto;
+            display: block;
+        }
+        
+        .form-input-table {
+            padding: 0.25rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 0.15rem;
             width: 100%;
-            box-sizing: border-box;
-            font-size: 0.9rem; /* Slightly smaller font for table inputs */
+            font-size: 0.8rem;
+        }
+        
+        .logo {
+            height: 40px;
+            margin-bottom: 1rem;
+        }
+        
+        .footer-note {
+            font-size: 0.7rem;
+            color: #666;
+            margin-top: 1rem;
+            border-top: 1px solid #eee;
+            padding-top: 0.5rem;
+        }
+        
+        .compact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .signature-field {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px dashed #ccc;
         }
     </style>
 </head>
-<body class="bg-gray-50 p-6">
+<body class="p-4 print:p-0">
 
-    <div id="formulario" class="max-w-6xl mx-auto bg-white shadow-xl p-8 rounded-2xl border border-gray-200">
-        <div class="text-center mb-8">
-            <img src="img/Logo.png" alt="Logo" class="mx-auto w-36 mb-4 rounded-md">
-            <h1 class="text-3xl font-extrabold text-gray-800">Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+    <div id="formulario" class="avoid-break">
+        <div class="text-center mb-4">
+            <img src="img/Logo.png" alt="Logo" class="logo mx-auto">
+            <h1 class="text-xl font-bold">Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        <div class="compact-grid">
             <div>
                 <label for="fichaProducao" class="form-label">Nº da Ficha de Produção:</label>
-                <input type="text" id="fichaProducao" class="form-input" placeholder="Nº da Ficha de Produção" value=""/>
+                <input type="text" id="fichaProducao" class="form-input">
             </div>
             <div>
                 <label for="data" class="form-label">Data:</label>
-                <input type="date" id="data" class="form-input" value="" />
+                <input type="date" id="data" class="form-input">
             </div>
-            <div class="md:col-span-2">
+            <div>
                 <label for="quantidadeVerificar" class="form-label">Quantidade a verificar:</label>
-                <input type="text" id="quantidadeVerificar" class="form-input" placeholder="Quantidade a verificar" value=""/>
+                <input type="text" id="quantidadeVerificar" class="form-input">
             </div>
             <div class="md:col-span-2">
                 <label for="quandoExecutar" class="form-label">Quando executar a inspeção:</label>
-                <input type="text" id="quandoExecutar" class="form-input" placeholder="Quando executar a inspeção" value=""/>
+                <input type="text" id="quandoExecutar" class="form-input">
             </div>
         </div>
 
-        <h2 class="text-2xl font-bold mt-8 mb-4 section-heading">Descrição do Produto</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <input type="text" class="col-span-2 form-input" placeholder="Descrição do Produto" value=""/>
-            <input type="text" class="form-input" placeholder="Lote" value=""/>
-            <input type="date" class="form-input" value="" />
-            <input type="number" class="form-input" placeholder="Quant" value=""/>
+        <h2 class="section-heading">Descrição do Produto</h2>
+        <div class="compact-grid">
+            <div class="col-span-2">
+                <input type="text" class="form-input" placeholder="Descrição do Produto">
+            </div>
+            <div>
+                <input type="text" class="form-input" placeholder="Lote">
+            </div>
+            <div>
+                <input type="date" class="form-input">
+            </div>
+            <div>
+                <input type="number" class="form-input" placeholder="Quant">
+            </div>
         </div>
 
-        <h2 class="text-2xl font-bold mt-8 mb-4 section-heading">Ensaios Realizados</h2>
-        <div class="overflow-x-auto mb-6">
-            <table class="w-full table-auto border border-gray-300 text-sm rounded-lg overflow-hidden">
+        <h2 class="section-heading">Ensaios Realizados</h2>
+        <div class="overflow-x-auto">
+            <table class="w-full">
                 <thead class="table-header">
                     <tr>
-                        <th class="border p-3 text-left">Ensaio Realizado</th>
-                        <th class="border p-3 text-left">Amostras</th>
-                        <th class="border p-3 text-left">Método</th>
-                        <th class="border p-3 text-left">Resultado</th>
-                        <th class="border p-3 text-center">Ações</th>
+                        <th>Ensaio Realizado</th>
+                        <th>Amostras</th>
+                        <th>Método</th>
+                        <th>Resultado</th>
+                        <th class="no-print">Ações</th>
                     </tr>
                 </thead>
-                <tbody id="testResultsTableBody">
-                    </tbody>
+                <tbody id="testResultsTableBody" class="avoid-break">
+                    <!-- Rows will be added here -->
+                </tbody>
             </table>
-            <button type="button" onclick="addTestRow()" class="add-row-button mt-4">Adicionar Ensaio</button>
+            <button type="button" onclick="addTestRow()" class="add-row-button no-print">Adicionar Ensaio</button>
         </div>
-           
 
-       <p class="text-sm text-gray-700 mt-6"><strong>Obs:</strong> Testes conforme NBR: (X) 7362 | 5688 | 7665 | 5647 | 5648<br><strong>N/A:</strong> Não Aplicável</p>
+        <div class="footer-note">
+            <p><strong>Obs:</strong> Testes conforme NBR: (X) 7362 | 5688 | 7665 | 5647 | 5648</p>
+            <p><strong>N/A:</strong> Não Aplicável</p>
+        </div>
 
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 avoid-break">
+            <div class="signature-field">
                 <label for="responsavelTestes" class="form-label">Responsável pelos testes:</label>
-                <input type="text" id="responsavelTestes" class="form-input" placeholder="Nome" value=""/>
-                <span class="text-sm text-gray-500">Controle de Qualidade</span>
+                <input type="text" id="responsavelTestes" class="form-input">
+                <div class="text-xs text-gray-500 mt-1">Controle de Qualidade</div>
             </div>
-            <div>
+            <div class="signature-field">
                 <label for="responsavelVerificacao" class="form-label">Responsável pela verificação:</label>
-                <input type="text" id="responsavelVerificacao" class="form-input" placeholder="Nome" value=""/>
-                <span class="text-sm text-gray-500">Supervisor da Qualidade</span>
+                <input type="text" id="responsavelVerificacao" class="form-input">
+                <div class="text-xs text-gray-500 mt-1">Supervisor da Qualidade</div>
             </div>
         </div>
     </div>
 
-    <div class="text-center mt-8">
-        <button class="pdf-button" onclick="gerarPDF()">Gerar PDF</button>
-    </div>
+    <button class="pdf-button no-print" onclick="gerarPDF()">Gerar PDF</button>
     
     <script>
-        // Initial test data
-        const initialTests = [
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-        ];
+        // Test data and options
+        const initialTests = Array(5).fill({
+            ensaio: '', amostras: '', metodo: '', resultado: ''
+        });
 
-        // Options for 'Ensaio Realizado' dropdown
         const ensaioOptions = [
             "Pressão Hidrostática (PHI)",
             "Pressão Hidrostática (Junta elástica)",
@@ -193,16 +248,11 @@
             "Marcações",
             "Achatamento",
             "Comportamento ao calor",
-            "Outro" // Added for flexibility if a test isn't in the list
+            "Outro"
         ];
 
-        // Options for 'Resultado' dropdown
-        const resultadoOptions = [
-            "APROVADO",
-            "REPROVADO",
-            "N/A"
-        ];
-        // Options for 'Método' dropdown
+        const resultadoOptions = ["APROVADO", "REPROVADO", "N/A"];
+
         const metodoOptions = [
             "0,5 Kgf/cm² × 5 min",
             "2 Kgf/cm² × 10 min",
@@ -214,90 +264,103 @@
             "150º +/- 2º × 30 min"
         ];
 
+        // Initialize form
         document.addEventListener('DOMContentLoaded', () => {
+            // Set current date as default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('data').value = today;
+            
+            // Add initial test rows
             initialTests.forEach(test => addTestRow(test));
         });
 
         function addTestRow(test = {}) {
             const tableBody = document.getElementById('testResultsTableBody');
             const newRow = tableBody.insertRow();
-            newRow.classList.add('border-b', 'border-gray-200'); // Add border to separate rows
-
-            const rowCount = tableBody.rows.length;
-            if (rowCount % 2 === 1) { // Check if it's an odd row for alternating background
+            newRow.className = 'table-row';
+            
+            if (tableBody.rows.length % 2 === 1) {
                 newRow.classList.add('table-row-odd');
             }
 
+            // Ensaio cell with dropdown
             const ensaioCell = newRow.insertCell();
+            ensaioCell.innerHTML = `
+                <select class="form-input-table">
+                    ${ensaioOptions.map(opt => 
+                        `<option value="${opt}" ${test.ensaio === opt ? 'selected' : ''}>${opt}</option>`
+                    ).join('')}
+                </select>
+            `;
+
+            // Amostras cell
             const amostrasCell = newRow.insertCell();
+            amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}">`;
+
+            // Método cell with dropdown
             const metodoCell = newRow.insertCell();
+            metodoCell.innerHTML = `
+                <select class="form-input-table">
+                    ${metodoOptions.map(opt => 
+                        `<option value="${opt}" ${test.metodo === opt ? 'selected' : ''}>${opt}</option>`
+                    ).join('')}
+                </select>
+            `;
+
+            // Resultado cell with dropdown
             const resultadoCell = newRow.insertCell();
+            resultadoCell.innerHTML = `
+                <select class="form-input-table">
+                    ${resultadoOptions.map(opt => 
+                        `<option value="${opt}" ${test.resultado === opt ? 'selected' : ''}>${opt}</option>`
+                    ).join('')}
+                </select>
+            `;
+
+            // Actions cell (print only in screen view)
             const actionsCell = newRow.insertCell();
-
-            ensaioCell.classList.add('border', 'p-3');
-            amostrasCell.classList.add('border', 'p-3');
-            metodoCell.classList.add('border', 'p-3');
-            resultadoCell.classList.add('border', 'p-3');
-            actionsCell.classList.add('border', 'p-3', 'text-center');
-
-            // Create select element for Ensaio
-            let ensaioSelectHtml = `<select class="form-input-table ensaio-select">`;
-            ensaioOptions.forEach(option => {
-                const selected = (test.ensaio === option) ? 'selected' : '';
-                ensaioSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
-            });
-            ensaioSelectHtml += `</select>`;
-            ensaioCell.innerHTML = ensaioSelectHtml;
-
-            amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}" placeholder="Amostras"/>`;
-            
-            // Create select element for Metodo
-            let metodoSelectHtml = `<select class="form-input-table metodo-select">`;
-            metodoOptions.forEach(option => {
-                const selected = (test.metodo === option) ? 'selected' : '';
-                metodoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
-            });
-            metodoSelectHtml += `</select>`;
-            metodoCell.innerHTML = metodoSelectHtml;
-
-            // Create select element for Resultado
-            let resultadoSelectHtml = `<select class="form-input-table resultado-select">`;
-            resultadoOptions.forEach(option => {
-                const selected = (test.resultado === option) ? 'selected' : '';
-                resultadoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
-            });
-            resultadoSelectHtml += `</select>`;
-            resultadoCell.innerHTML = resultadoSelectHtml;
-
+            actionsCell.className = 'no-print';
             actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
-
-            // Apply a more compact style to inputs and selects within the table
-            const tableInputs = newRow.querySelectorAll('.form-input-table');
-            tableInputs.forEach(element => { // Renamed from input to element as it can be select now
-                element.style.padding = '0.5rem';
-                element.style.border = '1px solid #e5e7eb';
-                element.style.borderRadius = '0.25rem';
-                element.style.width = '100%';
-                element.style.boxSizing = 'border-box';
-            });
         }
 
         function removeTestRow(button) {
-            const row = button.closest('tr');
-            row.remove();
+            button.closest('tr').remove();
         }
 
         function gerarPDF() {
-            const elemento = document.getElementById('formulario');
+            const element = document.getElementById('formulario');
             const opt = {
-                margin:       0.5,
-                filename:     'registro_inspecao.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
+                margin: [10, 5, 10, 5], // top, left, bottom, right
+                filename: 'registro_inspecao.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { 
+                    scale: 2,
+                    letterRendering: true,
+                    useCORS: true,
+                    allowTaint: true,
+                    scrollX: 0,
+                    scrollY: 0
+                },
+                jsPDF: { 
+                    unit: 'mm', 
+                    format: 'a4', 
+                    orientation: 'portrait',
+                    compress: true
+                },
+                pagebreak: { 
+                    mode: ['avoid-all', 'css', 'legacy'] 
+                }
             };
-            html2pdf().set(opt).from(elemento).save();
+            
+            // Temporarily hide the "no-print" elements
+            const noPrintElements = document.querySelectorAll('.no-print');
+            noPrintElements.forEach(el => el.style.display = 'none');
+            
+            html2pdf().set(opt).from(element).save().then(() => {
+                // Restore the "no-print" elements after PDF generation
+                noPrintElements.forEach(el => el.style.display = '');
+            });
         }
     </script>
 </body>
-</html> 
+</html>
