@@ -1,366 +1,200 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro de Inspeção</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <style>
-        /* Custom print-optimized styles */
-        @media print {
-            body {
-                background-color: white !important;
-                color: black !important;
-                font-size: 12pt;
-            }
-            .no-print {
-                display: none !important;
-            }
-            .page-break {
-                page-break-after: always;
-            }
-            .avoid-break {
-                page-break-inside: avoid;
-            }
-            table {
-                page-break-inside: avoid;
-            }
-        }
-        
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc;
-            color: #333;
-            line-height: 1.4;
-        }
-        
-        #formulario {
-            background-color: white;
-            max-width: 210mm; /* A4 width */
-            margin: 0 auto;
-            padding: 15mm;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        
-        .form-label {
-            display: block;
-            margin-bottom: 0.3rem;
-            color: #333;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 0.5rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.25rem;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-            font-size: 0.9rem;
-        }
-        
-        .section-heading {
-            border-bottom: 1px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin: 1.5rem 0 1rem;
-            color: #1f2937;
-            font-size: 1.1rem;
-            font-weight: 700;
-        }
-        
-        .table-header th {
-            background-color: #f0f4ff;
-            color: #1f2937;
-            font-weight: 600;
-            padding: 0.5rem;
-            font-size: 0.8rem;
-            text-align: left;
-        }
-        
-        .table-row td {
-            padding: 0.5rem;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 0.8rem;
-        }
-        
-        .table-row-odd {
-            background-color: #f9fafb;
-        }
-        
-        .add-row-button {
-            background-color: #22c55e;
-            color: white;
-            padding: 0.5rem 1rem;
-            border-radius: 0.25rem;
-            font-weight: 600;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-        }
-        
-        .remove-row-button {
-            background-color: #ef4444;
-            color: white;
-            padding: 0.25rem 0.5rem;
-            border-radius: 0.25rem;
-            font-size: 0.7rem;
-        }
-        
-        .pdf-button {
-            background-color: #3b82f6;
-            color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.25rem;
-            font-weight: 600;
-            margin: 1rem auto;
-            display: block;
-        }
-        
-        .form-input-table {
-            padding: 0.25rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.15rem;
-            width: 100%;
-            font-size: 0.8rem;
-        }
-        
-        .logo {
-            height: 40px;
-            margin-bottom: 1rem;
-        }
-        
-        .footer-note {
-            font-size: 0.7rem;
-            color: #666;
-            margin-top: 1rem;
-            border-top: 1px solid #eee;
-            padding-top: 0.5rem;
-        }
-        
-        .compact-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 0.5rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        .signature-field {
-            margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px dashed #ccc;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Registro de Inspeção</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      .page-break { page-break-after: always; }
+      .avoid-break { page-break-inside: avoid; }
+      table { page-break-inside: avoid; }
+    }
+
+    body {
+      background-color: #f8fafc;
+      color: #1f2937;
+      font-family: 'Segoe UI', sans-serif;
+      font-size: 12pt;
+    }
+
+    #formulario {
+      background: white;
+      max-width: 210mm;
+      margin: 0 auto;
+      padding: 20mm;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+
+    .form-label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      display: block;
+    }
+
+    .form-input, .form-input-table, select {
+      width: 100%;
+      padding: 0.5rem;
+      border: 1px solid #d1d5db;
+      border-radius: 0.25rem;
+      font-size: 0.85rem;
+    }
+
+    .section-heading {
+      font-size: 1.1rem;
+      font-weight: 700;
+      border-bottom: 2px solid #e5e7eb;
+      margin: 1.5rem 0 1rem;
+      padding-bottom: 0.3rem;
+    }
+
+    th, td {
+      padding: 0.5rem;
+      font-size: 0.8rem;
+      border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+      background: #f0f4ff;
+      text-align: left;
+      font-weight: 600;
+    }
+
+    tr:nth-child(odd) {
+      background: #f9fafb;
+    }
+
+    .logo {
+      height: 50px;
+    }
+
+    .add-row-button, .remove-row-button, .pdf-button {
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-radius: 0.25rem;
+      padding: 0.5rem 1rem;
+      margin-top: 0.5rem;
+    }
+
+    .add-row-button { background: #22c55e; color: white; }
+    .remove-row-button { background: #ef4444; color: white; }
+    .pdf-button { background: #3b82f6; color: white; display: block; margin: 1rem auto; }
+
+    .signature-field {
+      margin-top: 2rem;
+      border-top: 1px dashed #ccc;
+      padding-top: 1rem;
+    }
+
+    .footer-note {
+      font-size: 0.7rem;
+      color: #666;
+      margin-top: 1rem;
+      border-top: 1px solid #eee;
+      padding-top: 0.5rem;
+    }
+  </style>
 </head>
 <body class="p-4 print:p-0">
-
-    <div id="formulario" class="avoid-break">
-        <div class="text-center mb-4">
-            <img src="img/Logo.png" alt="Logo" class="logo mx-auto">
-            <h1 class="text-xl font-bold">Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
-        </div>
-
-        <div class="compact-grid">
-            <div>
-                <label for="fichaProducao" class="form-label">Nº da Ficha de Produção:</label>
-                <input type="text" id="fichaProducao" class="form-input">
-            </div>
-            <div>
-                <label for="data" class="form-label">Data:</label>
-                <input type="date" id="data" class="form-input">
-            </div>
-            <div>
-                <label for="quantidadeVerificar" class="form-label">Quantidade a verificar:</label>
-                <input type="text" id="quantidadeVerificar" class="form-input">
-            </div>
-            <div class="md:col-span-2">
-                <label for="quandoExecutar" class="form-label">Quando executar a inspeção:</label>
-                <input type="text" id="quandoExecutar" class="form-input">
-            </div>
-        </div>
-
-        <h2 class="section-heading">Descrição do Produto</h2>
-        <div class="compact-grid">
-            <div class="col-span-2">
-                <input type="text" class="form-input" placeholder="Descrição do Produto">
-            </div>
-            <div>
-                <input type="text" class="form-input" placeholder="Lote">
-            </div>
-            <div>
-                <input type="date" class="form-input">
-            </div>
-            <div>
-                <input type="number" class="form-input" placeholder="Quant">
-            </div>
-        </div>
-
-        <h2 class="section-heading">Ensaios Realizados</h2>
-        <div class="overflow-x-auto">
-            <table class="w-full">
-                <thead class="table-header">
-                    <tr>
-                        <th>Ensaio Realizado</th>
-                        <th>Amostras</th>
-                        <th>Método</th>
-                        <th>Resultado</th>
-                        <th class="no-print">Ações</th>
-                    </tr>
-                </thead>
-                <tbody id="testResultsTableBody" class="avoid-break">
-                    <!-- Rows will be added here -->
-                </tbody>
-            </table>
-            <button type="button" onclick="addTestRow()" class="add-row-button no-print">Adicionar Ensaio</button>
-        </div>
-
-        <div class="footer-note">
-            <p><strong>Obs:</strong> Testes conforme NBR: (X) 7362 | 5688 | 7665 | 5647 | 5648</p>
-            <p><strong>N/A:</strong> Não Aplicável</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 avoid-break">
-            <div class="signature-field">
-                <label for="responsavelTestes" class="form-label">Responsável pelos testes:</label>
-                <input type="text" id="responsavelTestes" class="form-input">
-                <div class="text-xs text-gray-500 mt-1">Controle de Qualidade</div>
-            </div>
-            <div class="signature-field">
-                <label for="responsavelVerificacao" class="form-label">Responsável pela verificação:</label>
-                <input type="text" id="responsavelVerificacao" class="form-input">
-                <div class="text-xs text-gray-500 mt-1">Supervisor da Qualidade</div>
-            </div>
-        </div>
+  <div id="formulario" class="avoid-break">
+    <div class="text-center mb-4">
+      <img src="img/Logo.png" alt="Logo" class="logo mx-auto">
+      <h1 class="text-xl font-bold">Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
     </div>
 
-    <button class="pdf-button no-print" onclick="gerarPDF()">Gerar PDF</button>
-    
-    <script>
-        // Test data and options
-        const initialTests = Array(5).fill({
-            ensaio: '', amostras: '', metodo: '', resultado: ''
-        });
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+      <div><label class="form-label">Nº Ficha:</label><input type="text" class="form-input"></div>
+      <div><label class="form-label">Data:</label><input type="date" class="form-input"></div>
+      <div><label class="form-label">Qtd. Verificar:</label><input type="text" class="form-input"></div>
+      <div><label class="form-label">Quando executar:</label><input type="text" class="form-input"></div>
+    </div>
 
-        const ensaioOptions = [
-            "Pressão Hidrostática (PHI)",
-            "Pressão Hidrostática (Junta elástica)",
-            "Vácuo",
-            "Dimensional",
-            "Marcações",
-            "Achatamento",
-            "Comportamento ao calor",
-            "Outro"
-        ];
+    <h2 class="section-heading">Descrição do Produto</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+      <input type="text" class="form-input col-span-2" placeholder="Descrição do Produto">
+      <input type="text" class="form-input" placeholder="Lote">
+      <input type="date" class="form-input">
+      <input type="number" class="form-input" placeholder="Quant">
+    </div>
 
-        const resultadoOptions = ["APROVADO", "REPROVADO", "N/A"];
+    <h2 class="section-heading">Ensaios Realizados</h2>
+    <table class="w-full mb-4">
+      <thead>
+        <tr>
+          <th>Ensaio</th>
+          <th>Amostra</th>
+          <th>Método</th>
+          <th>Resultado</th>
+          <th class="no-print">Ações</th>
+        </tr>
+      </thead>
+      <tbody id="testResultsTableBody"></tbody>
+    </table>
+    <button type="button" onclick="addTestRow()" class="add-row-button no-print">Adicionar Ensaio</button>
 
-        const metodoOptions = [
-            "0,5 Kgf/cm² × 5 min",
-            "2 Kgf/cm² × 10 min",
-            "0,5 Kgf/cm² × 15 min",
-            "Gabarito",
-            "Visual",
-            "Prensa de (20% ↔ 30%)",
-            "0,5 Kgf/cm² × 15 min",
-            "150º +/- 2º × 30 min"
-        ];
+    <div class="footer-note">
+      <p><strong>Obs:</strong> Testes conforme NBR: (X) 7362 | 5688 | 7665 | 5647 | 5648</p>
+      <p><strong>N/A:</strong> Não Aplicável</p>
+    </div>
 
-        // Initialize form
-        document.addEventListener('DOMContentLoaded', () => {
-            // Set current date as default
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('data').value = today;
-            
-            // Add initial test rows
-            initialTests.forEach(test => addTestRow(test));
-        });
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4 avoid-break">
+      <div class="signature-field">
+        <label class="form-label">Responsável pelos testes:</label>
+        <input type="text" class="form-input">
+        <div class="text-xs text-gray-500 mt-1">Controle de Qualidade</div>
+      </div>
+      <div class="signature-field">
+        <label class="form-label">Responsável pela verificação:</label>
+        <input type="text" class="form-input">
+        <div class="text-xs text-gray-500 mt-1">Supervisor da Qualidade</div>
+      </div>
+    </div>
+  </div>
 
-        function addTestRow(test = {}) {
-            const tableBody = document.getElementById('testResultsTableBody');
-            const newRow = tableBody.insertRow();
-            newRow.className = 'table-row';
-            
-            if (tableBody.rows.length % 2 === 1) {
-                newRow.classList.add('table-row-odd');
-            }
+  <button class="pdf-button no-print" onclick="gerarPDF()">Gerar PDF</button>
 
-            // Ensaio cell with dropdown
-            const ensaioCell = newRow.insertCell();
-            ensaioCell.innerHTML = `
-                <select class="form-input-table">
-                    ${ensaioOptions.map(opt => 
-                        `<option value="${opt}" ${test.ensaio === opt ? 'selected' : ''}>${opt}</option>`
-                    ).join('')}
-                </select>
-            `;
+  <script>
+    const ensaioOptions = ["PHI", "Junta Elástica", "Vácuo", "Dimensional", "Marcações", "Achatamento", "Calor", "Outro"];
+    const resultadoOptions = ["APROVADO", "REPROVADO", "N/A"];
+    const metodoOptions = ["0,5Kgf/cm² x 5min", "2Kgf/cm² x 10min", "Visual", "Gabarito", "150ºC x 30min"];
 
-            // Amostras cell
-            const amostrasCell = newRow.insertCell();
-            amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}">`;
+    document.addEventListener('DOMContentLoaded', () => {
+      const hoje = new Date().toISOString().split('T')[0];
+      document.querySelector('input[type="date"]').value = hoje;
+      for (let i = 0; i < 5; i++) addTestRow();
+    });
 
-            // Método cell with dropdown
-            const metodoCell = newRow.insertCell();
-            metodoCell.innerHTML = `
-                <select class="form-input-table">
-                    ${metodoOptions.map(opt => 
-                        `<option value="${opt}" ${test.metodo === opt ? 'selected' : ''}>${opt}</option>`
-                    ).join('')}
-                </select>
-            `;
+    function addTestRow() {
+      const tbody = document.getElementById('testResultsTableBody');
+      const row = tbody.insertRow();
+      row.innerHTML = `
+        <td><select class="form-input-table">${ensaioOptions.map(o => `<option>${o}</option>`).join('')}</select></td>
+        <td><input type="text" class="form-input-table"></td>
+        <td><select class="form-input-table">${metodoOptions.map(o => `<option>${o}</option>`).join('')}</select></td>
+        <td><select class="form-input-table">${resultadoOptions.map(o => `<option>${o}</option>`).join('')}</select></td>
+        <td class="no-print"><button onclick="this.closest('tr').remove()" class="remove-row-button">Remover</button></td>`;
+    }
 
-            // Resultado cell with dropdown
-            const resultadoCell = newRow.insertCell();
-            resultadoCell.innerHTML = `
-                <select class="form-input-table">
-                    ${resultadoOptions.map(opt => 
-                        `<option value="${opt}" ${test.resultado === opt ? 'selected' : ''}>${opt}</option>`
-                    ).join('')}
-                </select>
-            `;
+    function gerarPDF() {
+      const el = document.getElementById('formulario');
+      const noPrintEls = document.querySelectorAll('.no-print');
+      noPrintEls.forEach(el => el.style.display = 'none');
 
-            // Actions cell (print only in screen view)
-            const actionsCell = newRow.insertCell();
-            actionsCell.className = 'no-print';
-            actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
-        }
-
-        function removeTestRow(button) {
-            button.closest('tr').remove();
-        }
-
-        function gerarPDF() {
-            const element = document.getElementById('formulario');
-            const opt = {
-                margin: [10, 5, 10, 5], // top, left, bottom, right
-                filename: 'registro_inspecao.pdf',
-                image: { type: 'jpeg', quality: 0.98 },
-                html2canvas: { 
-                    scale: 2,
-                    letterRendering: true,
-                    useCORS: true,
-                    allowTaint: true,
-                    scrollX: 0,
-                    scrollY: 0
-                },
-                jsPDF: { 
-                    unit: 'mm', 
-                    format: 'a4', 
-                    orientation: 'portrait',
-                    compress: true
-                },
-                pagebreak: { 
-                    mode: ['avoid-all', 'css', 'legacy'] 
-                }
-            };
-            
-            // Temporarily hide the "no-print" elements
-            const noPrintElements = document.querySelectorAll('.no-print');
-            noPrintElements.forEach(el => el.style.display = 'none');
-            
-            html2pdf().set(opt).from(element).save().then(() => {
-                // Restore the "no-print" elements after PDF generation
-                noPrintElements.forEach(el => el.style.display = '');
-            });
-        }
-    </script>
+      html2pdf().set({
+        margin: 10,
+        filename: 'registro_inspecao.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] }
+      }).from(el).save().then(() => {
+        noPrintEls.forEach(el => el.style.display = '');
+      });
+    }
+  </script>
 </body>
 </html>
