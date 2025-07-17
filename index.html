@@ -1,303 +1,514 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Registro de Inspeção</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RQ-504-01 Registro de Inspeção de Peças Acabadas</title>
     <style>
-        /* Custom styles for better aesthetics */
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f8fafc; /* Light background */
-            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 20px;
             line-height: 1.6;
         }
-        .form-label {
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .header-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
             display: block;
-            margin-bottom: 0.5rem;
-            color: #333;
-            font-weight: 600;
+            margin-bottom: 5px;
+            font-weight: bold;
         }
-        .form-input {
+        input, select, textarea {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #d1d5db;
-            border-radius: 0.375rem;
-            box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05);
-            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
-            background-color: #ffffff; /* Ensure white background for inputs */
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
-        .form-input:focus {
-            border-color: #3b82f6;
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
         }
-        .section-heading {
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.5rem;
-            margin-bottom: 1.5rem;
-            color: #1f2937;
-        }
-        .table-header th {
-            background-color: #e0e7ff; /* Light blue */
-            color: #1f2937;
-            font-weight: 700;
-            padding: 0.75rem;
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
             text-align: left;
         }
-        .table-row-odd {
-            background-color: #f9fafb; /* Lightest gray for alternating rows */
+        th {
+            background-color: #f2f2f2;
         }
-        .add-row-button {
-            background-color: #22c55e; /* Green */
+        .test-row {
+            display: flex;
+            margin-bottom: 10px;
+        }
+        .test-row div {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .test-row div:last-child {
+            margin-right: 0;
+        }
+        .nbr-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .nbr-checkbox {
+            display: flex;
+            align-items: center;
+        }
+        button {
+            background-color: #4CAF50;
             color: white;
-            padding: 0.75rem 1.5rem;
-            border-radius: 0.5rem;
-            font-weight: 600;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
         }
-        .add-row-button:hover {
-            background-color: #16a34a; /* Darker green */
+        button:hover {
+            background-color: #45a049;
         }
-        .remove-row-button {
-            background-color: #ef4444; /* Red */
-            color: white;
-            padding: 0.375rem 0.75rem;
-            border-radius: 0.375rem;
-            font-size: 0.875rem;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        .signature-area {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
         }
-        .remove-row-button:hover {
-            background-color: #dc2626; /* Darker red */
+        .signature-box {
+            width: 45%;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            text-align: center;
         }
-        .pdf-button {
-            background-color: #007bff; /* Blue for PDF button */
-            color: white;
-            padding: 1rem 2rem;
-            border-radius: 0.5rem;
-            font-weight: 700;
-            font-size: 1.1rem;
-            transition: background-color 0.2s ease-in-out;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        .hidden {
+            display: none;
         }
-        .pdf-button:hover {
-            background-color: #0056b3; /* Darker blue */
+        #report {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
         }
-        /* Styles for inputs/selects inside the table */
-        .form-input-table {
-            padding: 0.5rem;
-            border: 1px solid #e5e7eb;
-            border-radius: 0.25rem;
-            width: 100%;
-            box-sizing: border-box;
-            font-size: 0.9rem; /* Slightly smaller font for table inputs */
+        .print-button {
+            background-color: #2196F3;
+            margin-left: 10px;
+        }
+        .print-button:hover {
+            background-color: #0b7dda;
         }
     </style>
 </head>
-<body class="bg-gray-50 p-6">
-
-    <div id="formulario" class="max-w-6xl mx-auto bg-white shadow-xl p-8 rounded-2xl border border-gray-200">
-        <div class="text-center mb-8">
-            <img src="img/Logo.png" alt="Logo" class="mx-auto w-36 mb-4 rounded-md">
-            <h1 class="text-3xl font-extrabold text-gray-800">Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-            <div>
-                <label for="fichaProducao" class="form-label">Nº da Ficha de Produção:</label>
-                <input type="text" id="fichaProducao" class="form-input" placeholder="Nº da Ficha de Produção" value=""/>
+<body>
+    <div class="container">
+        <h1>RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+        
+        <form id="inspectionForm">
+            <div class="header-info">
+                <div class="form-group" style="width: 48%;">
+                    <label for="productionNumber">Nº da Ficha de Produção:</label>
+                    <input type="text" id="productionNumber" required>
+                </div>
+                <div class="form-group" style="width: 48%;">
+                    <label for="inspectionDate">Data:</label>
+                    <input type="date" id="inspectionDate" required>
+                </div>
             </div>
-            <div>
-                <label for="data" class="form-label">Data:</label>
-                <input type="date" id="data" class="form-input" value="" />
+            
+            <div class="form-group">
+                <label for="quantityToCheck">Quantidade a verificar:</label>
+                <input type="text" id="quantityToCheck" value="Acima de 500 peças verificar plano de amostragem" required>
             </div>
-            <div class="md:col-span-2">
-                <label for="quantidadeVerificar" class="form-label">Quantidade a verificar:</label>
-                <input type="text" id="quantidadeVerificar" class="form-input" placeholder="Quantidade a verificar" value=""/>
+            
+            <div class="form-group">
+                <label for="whenToExecute">Quando executar a inspeção:</label>
+                <input type="text" id="whenToExecute" value="Peças Acabadas" required>
             </div>
-            <div class="md:col-span-2">
-                <label for="quandoExecutar" class="form-label">Quando executar a inspeção:</label>
-                <input type="text" id="quandoExecutar" class="form-input" placeholder="Quando executar a inspeção" value=""/>
-            </div>
-        </div>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4 section-heading">Descrição do Produto</h2>
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <input type="text" class="col-span-2 form-input" placeholder="Descrição do Produto" value=""/>
-            <input type="text" class="form-input" placeholder="Lote" value=""/>
-            <input type="date" class="form-input" value="" />
-            <input type="number" class="form-input" placeholder="Quant" value=""/>
-        </div>
-
-        <h2 class="text-2xl font-bold mt-8 mb-4 section-heading">Ensaios Realizados</h2>
-        <div class="overflow-x-auto mb-6">
-            <table class="w-full table-auto border border-gray-300 text-sm rounded-lg overflow-hidden">
-                <thead class="table-header">
+            
+            <h2>Informações do Produto</h2>
+            <table id="productTable">
+                <thead>
                     <tr>
-                        <th class="border p-3 text-left">Ensaio Realizado</th>
-                        <th class="border p-3 text-left">Amostras</th>
-                        <th class="border p-3 text-left">Método</th>
-                        <th class="border p-3 text-left">Resultado</th>
-                        <th class="border p-3 text-center">Ações</th>
+                        <th>Descrição do produto</th>
+                        <th>Lote</th>
+                        <th>Data</th>
+                        <th>Quant.</th>
                     </tr>
                 </thead>
-                <tbody id="testResultsTableBody">
-                    </tbody>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="product-desc" required></td>
+                        <td><input type="text" class="product-lot" required></td>
+                        <td><input type="date" class="product-date" required></td>
+                        <td><input type="number" class="product-quantity" required></td>
+                    </tr>
+                </tbody>
             </table>
-            <button type="button" onclick="addTestRow()" class="add-row-button mt-4">Adicionar Ensaio</button>
-        </div>
-           
-
-       <p class="text-sm text-gray-700 mt-6"><strong>Obs:</strong> Testes conforme NBR: (X) 7362 | 5688 | 7665 | 5647 | 5648<br><strong>N/A:</strong> Não Aplicável</p>
-
-        <div class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-                <label for="responsavelTestes" class="form-label">Responsável pelos testes:</label>
-                <input type="text" id="responsavelTestes" class="form-input" placeholder="Nome" value=""/>
-                <span class="text-sm text-gray-500">Controle de Qualidade</span>
-            </div>
-            <div>
-                <label for="responsavelVerificacao" class="form-label">Responsável pela verificação:</label>
-                <input type="text" id="responsavelVerificacao" class="form-input" placeholder="Nome" value=""/>
-                <span class="text-sm text-gray-500">Supervisor da Qualidade</span>
-            </div>
-        </div>
-    </div>
-
-    <div class="text-center mt-8">
-        <button class="pdf-button" onclick="gerarPDF()">Gerar PDF</button>
-    </div>
-    
-    <script>
-        // Initial test data
-        const initialTests = [
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-            { ensaio: '', amostras: '', metodo: '', resultado: '' },
-        ];
-
-        // Options for 'Ensaio Realizado' dropdown
-        const ensaioOptions = [
-            "Pressão Hidrostática (PHI)",
-            "Pressão Hidrostática (Junta elástica)",
-            "Vácuo",
-            "Dimensional",
-            "Marcações",
-            "Achatamento",
-            "Comportamento ao calor",
-            "Outro" // Added for flexibility if a test isn't in the list
-        ];
-
-        // Options for 'Resultado' dropdown
-        const resultadoOptions = [
-            "APROVADO",
-            "REPROVADO",
-            "N/A"
-        ];
-        // Options for 'Método' dropdown
-        const metodoOptions = [
-            "0,5 Kgf/cm² × 5 min",
-            "2 Kgf/cm² × 10 min",
-            "0,5 Kgf/cm² × 15 min",
-            "Gabarito",
-            "Visual",
-            "Prensa de (20% ↔ 30%)",
-            "0,5 Kgf/cm² × 15 min",
-            "150º +/- 2º × 30 min"
-        ];
-
-        document.addEventListener('DOMContentLoaded', () => {
-            initialTests.forEach(test => addTestRow(test));
-        });
-
-        function addTestRow(test = {}) {
-            const tableBody = document.getElementById('testResultsTableBody');
-            const newRow = tableBody.insertRow();
-            newRow.classList.add('border-b', 'border-gray-200'); // Add border to separate rows
-
-            const rowCount = tableBody.rows.length;
-            if (rowCount % 2 === 1) { // Check if it's an odd row for alternating background
-                newRow.classList.add('table-row-odd');
-            }
-
-            const ensaioCell = newRow.insertCell();
-            const amostrasCell = newRow.insertCell();
-            const metodoCell = newRow.insertCell();
-            const resultadoCell = newRow.insertCell();
-            const actionsCell = newRow.insertCell();
-
-            ensaioCell.classList.add('border', 'p-3');
-            amostrasCell.classList.add('border', 'p-3');
-            metodoCell.classList.add('border', 'p-3');
-            resultadoCell.classList.add('border', 'p-3');
-            actionsCell.classList.add('border', 'p-3', 'text-center');
-
-            // Create select element for Ensaio
-            let ensaioSelectHtml = `<select class="form-input-table ensaio-select">`;
-            ensaioOptions.forEach(option => {
-                const selected = (test.ensaio === option) ? 'selected' : '';
-                ensaioSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
-            });
-            ensaioSelectHtml += `</select>`;
-            ensaioCell.innerHTML = ensaioSelectHtml;
-
-            amostrasCell.innerHTML = `<input type="text" class="form-input-table" value="${test.amostras || ''}" placeholder="Amostras"/>`;
+            <button type="button" id="addProductRow">+ Adicionar outra linha</button>
             
-            // Create select element for Metodo
-            let metodoSelectHtml = `<select class="form-input-table metodo-select">`;
-            metodoOptions.forEach(option => {
-                const selected = (test.metodo === option) ? 'selected' : '';
-                metodoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
+            <h2>Ensaios Realizados</h2>
+            <table id="testsTable">
+                <thead>
+                    <tr>
+                        <th>Ensaio Realizado</th>
+                        <th>Amostras</th>
+                        <th>Método</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" value="Pressão Hidrostática (PHI)" class="test-name" required></td>
+                        <td><input type="text" value="03" class="test-samples" required></td>
+                        <td><input type="text" value="0,5 Kgf/cm³ x 5 min" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO">APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Pressão Hidrostática (Junta elástica)" class="test-name" required></td>
+                        <td><input type="text" value="03" class="test-samples" required></td>
+                        <td><input type="text" value="2 Kgf/cm³ x 10 min" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO" selected>APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Vácuo" class="test-name" required></td>
+                        <td><input type="text" value="03" class="test-samples" required></td>
+                        <td><input type="text" value="0,5 Kgf/cm³ 15 min" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO" selected>APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Dimensional" class="test-name" required></td>
+                        <td><input type="text" value="08" class="test-samples" required></td>
+                        <td><input type="text" value="Gabarito" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO" selected>APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Marcações" class="test-name" required></td>
+                        <td><input type="text" value="08" class="test-samples" required></td>
+                        <td><input type="text" value="Visual" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO" selected>APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Achatamento" class="test-name" required></td>
+                        <td><input type="text" value="N/A" class="test-samples" required></td>
+                        <td><input type="text" value="Prensa de ( )20% ( )30%" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO">APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A" selected>N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><input type="text" value="Comportamento ao calor" class="test-name" required></td>
+                        <td><input type="text" value="N/A" class="test-samples" required></td>
+                        <td><input type="text" value="150º +/- 2º x 30 min" class="test-method" required></td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO">APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A" selected>N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
+            
+            <div class="form-group">
+                <label>Obs: Testes conforme NBR:</label>
+                <div class="nbr-checkboxes">
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr7362" checked>
+                        <label for="nbr7362" style="font-weight: normal; margin-left: 5px;">7362</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr5688">
+                        <label for="nbr5688" style="font-weight: normal; margin-left: 5px;">5688</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr7665">
+                        <label for="nbr7665" style="font-weight: normal; margin-left: 5px;">7665</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr5647">
+                        <label for="nbr5647" style="font-weight: normal; margin-left: 5px;">5647</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr5648">
+                        <label for="nbr5648" style="font-weight: normal; margin-left: 5px;">5648</label>
+                    </div>
+                    <div style="margin-left: 10px;">
+                        N/A: Não Aplicável
+                    </div>
+                </div>
+            </div>
+            
+            <div class="signature-area">
+                <div class="form-group signature-box">
+                    <label>Responsável pelos testes:</label>
+                    <input type="text" id="testResponsible" required>
+                </div>
+                <div class="form-group signature-box">
+                    <label>Responsável pela verificação:</label>
+                    <input type="text" id="verificationResponsible" required>
+                </div>
+            </div>
+            
+            <button type="button" id="generateReport">Gerar Relatório</button>
+        </form>
+        
+        <div id="report" class="hidden">
+            <h1 id="reportTitle">RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+            
+            <div class="header-info">
+                <div><strong>Nº da Ficha de Produção:</strong> <span id="reportProductionNumber"></span></div>
+                <div><strong>Data:</strong> <span id="reportInspectionDate"></span></div>
+            </div>
+            
+            <div>
+                <strong>Quantidade a verificar:</strong> <span id="reportQuantityToCheck"></span>
+            </div>
+            
+            <div>
+                <strong>Quando executar a inspeção:</strong> <span id="reportWhenToExecute"></span>
+            </div>
+            
+            <h2>Informações do Produto</h2>
+            <table id="reportProductTable">
+                <thead>
+                    <tr>
+                        <th>Descrição do produto</th>
+                        <th>Lote</th>
+                        <th>Data</th>
+                        <th>Quant.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Produtos serão adicionados aqui pelo JavaScript -->
+                </tbody>
+            </table>
+            
+            <h2>Ensaios Realizados</h2>
+            <table id="reportTestsTable">
+                <thead>
+                    <tr>
+                        <th>Ensaio Realizado</th>
+                        <th>Amostras</th>
+                        <th>Método</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Testes serão adicionados aqui pelo JavaScript -->
+                </tbody>
+            </table>
+            
+            <div>
+                <strong>Obs: Testes conforme NBR:</strong> 
+                <span id="reportNbrs"></span>
+                <span> N/A: Não Aplicável</span>
+            </div>
+            
+            <div class="signature-area">
+                <div class="signature-box">
+                    <div>Responsável pelos testes:</div>
+                    <div id="reportTestResponsible"></div>
+                </div>
+                <div class="signature-box">
+                    <div>Responsável pela verificação:</div>
+                    <div id="reportVerificationResponsible"></div>
+                </div>
+            </div>
+            
+            <button type="button" id="printReport" class="print-button">Imprimir Relatório</button>
+            <button type="button" id="backToForm">Voltar ao Formulário</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Adicionar nova linha de produto
+            document.getElementById('addProductRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#productTable tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" class="product-desc" required></td>
+                    <td><input type="text" class="product-lot" required></td>
+                    <td><input type="date" class="product-date" required></td>
+                    <td><input type="number" class="product-quantity" required></td>
+                `;
+                tbody.appendChild(newRow);
             });
-            metodoSelectHtml += `</select>`;
-            metodoCell.innerHTML = metodoSelectHtml;
-
-            // Create select element for Resultado
-            let resultadoSelectHtml = `<select class="form-input-table resultado-select">`;
-            resultadoOptions.forEach(option => {
-                const selected = (test.resultado === option) ? 'selected' : '';
-                resultadoSelectHtml += `<option value="${option}" ${selected}>${option}</option>`;
+            
+            // Adicionar nova linha de teste
+            document.getElementById('addTestRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#testsTable tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" class="test-name" required></td>
+                    <td><input type="text" class="test-samples" required></td>
+                    <td><input type="text" class="test-method" required></td>
+                    <td>
+                        <select class="test-result" required>
+                            <option value="APROVADO">APROVADO</option>
+                            <option value="REPROVADO">REPROVADO</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
             });
-            resultadoSelectHtml += `</select>`;
-            resultadoCell.innerHTML = resultadoSelectHtml;
-
-            actionsCell.innerHTML = `<button type="button" onclick="removeTestRow(this)" class="remove-row-button">Remover</button>`;
-
-            // Apply a more compact style to inputs and selects within the table
-            const tableInputs = newRow.querySelectorAll('.form-input-table');
-            tableInputs.forEach(element => { // Renamed from input to element as it can be select now
-                element.style.padding = '0.5rem';
-                element.style.border = '1px solid #e5e7eb';
-                element.style.borderRadius = '0.25rem';
-                element.style.width = '100%';
-                element.style.boxSizing = 'border-box';
+            
+            // Gerar relatório
+            document.getElementById('generateReport').addEventListener('click', function() {
+                if (!document.getElementById('inspectionForm').checkValidity()) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
+                
+                // Preencher informações básicas
+                document.getElementById('reportProductionNumber').textContent = 
+                    document.getElementById('productionNumber').value;
+                
+                const inspectionDate = new Date(document.getElementById('inspectionDate').value);
+                document.getElementById('reportInspectionDate').textContent = 
+                    inspectionDate.toLocaleDateString('pt-BR');
+                
+                document.getElementById('reportQuantityToCheck').textContent = 
+                    document.getElementById('quantityToCheck').value;
+                
+                document.getElementById('reportWhenToExecute').textContent = 
+                    document.getElementById('whenToExecute').value;
+                
+                // Preencher tabela de produtos
+                const productTableBody = document.querySelector('#reportProductTable tbody');
+                productTableBody.innerHTML = '';
+                
+                const productRows = document.querySelectorAll('#productTable tbody tr');
+                productRows.forEach(row => {
+                    const desc = row.querySelector('.product-desc').value;
+                    const lot = row.querySelector('.product-lot').value;
+                    const date = new Date(row.querySelector('.product-date').value);
+                    const quant = row.querySelector('.product-quantity').value;
+                    
+                    if (desc && lot && date && quant) {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${desc}</td>
+                            <td>${lot}</td>
+                            <td>${date.toLocaleDateString('pt-BR')}</td>
+                            <td>${quant}</td>
+                        `;
+                        productTableBody.appendChild(newRow);
+                    }
+                });
+                
+                // Preencher tabela de testes
+                const testsTableBody = document.querySelector('#reportTestsTable tbody');
+                testsTableBody.innerHTML = '';
+                
+                const testRows = document.querySelectorAll('#testsTable tbody tr');
+                testRows.forEach(row => {
+                    const name = row.querySelector('.test-name').value;
+                    const samples = row.querySelector('.test-samples').value;
+                    const method = row.querySelector('.test-method').value;
+                    const result = row.querySelector('.test-result').value;
+                    
+                    if (name && samples && method && result) {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${name}</td>
+                            <td>${samples}</td>
+                            <td>${method}</td>
+                            <td>${result}</td>
+                        `;
+                        testsTableBody.appendChild(newRow);
+                    }
+                });
+                
+                // Preencher NBRs
+                const nbrs = [];
+                if (document.getElementById('nbr7362').checked) nbrs.push('7362');
+                if (document.getElementById('nbr5688').checked) nbrs.push('5688');
+                if (document.getElementById('nbr7665').checked) nbrs.push('7665');
+                if (document.getElementById('nbr5647').checked) nbrs.push('5647');
+                if (document.getElementById('nbr5648').checked) nbrs.push('5648');
+                
+                let nbrsText = '';
+                if (nbrs.length > 0) {
+                    nbrsText = '(X) ' + nbrs.join(' ( ) ') + ' ( ) ';
+                }
+                document.getElementById('reportNbrs').textContent = nbrsText;
+                
+                // Preencher responsáveis
+                document.getElementById('reportTestResponsible').textContent = 
+                    document.getElementById('testResponsible').value;
+                
+                document.getElementById('reportVerificationResponsible').textContent = 
+                    document.getElementById('verificationResponsible').value;
+                
+                // Mostrar relatório e esconder formulário
+                document.getElementById('inspectionForm').classList.add('hidden');
+                document.getElementById('report').classList.remove('hidden');
             });
-        }
-
-        function removeTestRow(button) {
-            const row = button.closest('tr');
-            row.remove();
-        }
-
-        function gerarPDF() {
-            const elemento = document.getElementById('formulario');
-            const opt = {
-                margin:       0.5,
-                filename:     'registro_inspecao.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2 },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
-            html2pdf().set(opt).from(elemento).save();
-        }
+            
+            // Voltar ao formulário
+            document.getElementById('backToForm').addEventListener('click', function() {
+                document.getElementById('inspectionForm').classList.remove('hidden');
+                document.getElementById('report').classList.add('hidden');
+            });
+            
+            // Imprimir relatório
+            document.getElementById('printReport').addEventListener('click', function() {
+                window.print();
+            });
+        });
     </script>
 </body>
-</html> 
+</html>
