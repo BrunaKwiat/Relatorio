@@ -173,89 +173,27 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td><input type="text" value="Pressão Hidrostática (PHI)" class="test-name" required></td>
-                        <td><input type="text" value="03" class="test-samples" required></td>
-                        <td><input type="text" value="0,5 Kgf/cm³ x 5 min" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO">APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A">N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Pressão Hidrostática (Junta elástica)" class="test-name" required></td>
-                        <td><input type="text" value="03" class="test-samples" required></td>
-                        <td><input type="text" value="2 Kgf/cm³ x 10 min" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO" selected>APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A">N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Vácuo" class="test-name" required></td>
-                        <td><input type="text" value="03" class="test-samples" required></td>
-                        <td><input type="text" value="0,5 Kgf/cm³ 15 min" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO" selected>APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A">N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Dimensional" class="test-name" required></td>
-                        <td><input type="text" value="08" class="test-samples" required></td>
-                        <td><input type="text" value="Gabarito" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO" selected>APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A">N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Marcações" class="test-name" required></td>
-                        <td><input type="text" value="08" class="test-samples" required></td>
-                        <td><input type="text" value="Visual" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO" selected>APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A">N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Achatamento" class="test-name" required></td>
-                        <td><input type="text" value="N/A" class="test-samples" required></td>
-                        <td><input type="text" value="Prensa de ( )20% ( )30%" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO">APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A" selected>N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><input type="text" value="Comportamento ao calor" class="test-name" required></td>
-                        <td><input type="text" value="N/A" class="test-samples" required></td>
-                        <td><input type="text" value="150º +/- 2º x 30 min" class="test-method" required></td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO">APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A" selected>N/A</option>
-                            </select>
-                        </td>
-                    </tr>
+    <td>
+        <select class="test-name" required>
+            <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+            <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+            <option value="Vácuo">Vácuo</option>
+            <option value="Dimensional">Dimensional</option>
+            <option value="Marcações">Marcações</option>
+            <option value="Achatamento">Achatamento</option>
+            <option value="Comportamento ao calor">Comportamento ao calor</option>
+        </select>
+    </td>
+    <td><input type="text" value="03" class="test-samples" required></td>
+    <td><input type="text" value="0,5 Kgf/cm³ x 5 min" class="test-method" required></td>
+    <td>
+        <select class="test-result" required>
+            <option value="APROVADO">APROVADO</option>
+            <option value="REPROVADO">REPROVADO</option>
+            <option value="N/A">N/A</option>
+        </select>
+    </td>
+</tr>
                 </tbody>
             </table>
             <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
