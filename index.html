@@ -173,27 +173,48 @@
                 </thead>
                 <tbody>
                     <tr>
-    <td>
-        <select class="test-name" required>
-            <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
-            <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
-            <option value="Vácuo">Vácuo</option>
-            <option value="Dimensional">Dimensional</option>
-            <option value="Marcações">Marcações</option>
-            <option value="Achatamento">Achatamento</option>
-            <option value="Comportamento ao calor">Comportamento ao calor</option>
-        </select>
-    </td>
-    <td><input type="text" value="03" class="test-samples" required></td>
-    <td><input type="text" value="0,5 Kgf/cm³ x 5 min" class="test-method" required></td>
-    <td>
-        <select class="test-result" required>
-            <option value="APROVADO">APROVADO</option>
-            <option value="REPROVADO">REPROVADO</option>
-            <option value="N/A">N/A</option>
-        </select>
-    </td>
-</tr>
+                        <td>
+                            <select class="test-name" required>
+                                <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+                                <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+                                <option value="Vácuo">Vácuo</option>
+                                <option value="Dimensional">Dimensional</option>
+                                <option value="Marcações">Marcações</option>
+                                <option value="Achatamento">Achatamento</option>
+                                <option value="Comportamento ao calor">Comportamento ao calor</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-samples" required>
+                                <option value="03" selected>03</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="Plano de amostragem">Plano de amostragem</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-method" required>
+                                <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
+                                <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
+                                <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
+                                <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
+                                <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
+                                <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
+                                <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
+                                <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
+                                <option value="Outro método">Outro método</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO">APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
             <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
@@ -329,9 +350,40 @@
                 const tbody = document.querySelector('#testsTable tbody');
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                    <td><input type="text" class="test-name" required></td>
-                    <td><input type="text" class="test-samples" required></td>
-                    <td><input type="text" class="test-method" required></td>
+                    <td>
+                        <select class="test-name" required>
+                            <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+                            <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+                            <option value="Vácuo">Vácuo</option>
+                            <option value="Dimensional">Dimensional</option>
+                            <option value="Marcações">Marcações</option>
+                            <option value="Achatamento">Achatamento</option>
+                            <option value="Comportamento ao calor">Comportamento ao calor</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-samples" required>
+                            <option value="03" selected>03</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="Plano de amostragem">Plano de amostragem</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-method" required>
+                            <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
+                            <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
+                            <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
+                            <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
+                            <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
+                            <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
+                            <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
+                            <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
+                            <option value="Outro método">Outro método</option>
+                        </select>
+                    </td>
                     <td>
                         <select class="test-result" required>
                             <option value="APROVADO">APROVADO</option>
