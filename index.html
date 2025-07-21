@@ -118,27 +118,10 @@
         .image-preview {
             display: flex;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             margin-top: 10px;
         }
-        .image-preview img {
-            max-width: 150px;
-            max-height: 150px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .report-images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 15px 0;
-        }
-        .report-images img {
-            max-width: 200px;
-            max-height: 200px;
-            border: 1px solid #ddd;
-        }
-   .image-preview-item {
+        .image-preview-item {
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -156,6 +139,12 @@
             text-align: center;
             word-break: break-all;
             max-width: 150px;
+        }
+        .report-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 15px 0;
         }
         .report-image-item {
             display: flex;
@@ -311,7 +300,7 @@
                 </div>
             </div>
             
-            <!-- Seção de upload de imagens -->
+            <!-- Seção de upload de imagens com nome -->
             <div class="form-group image-upload">
                 <label for="imageUpload">Anexar Fotos/Imagens:</label>
                 <input type="file" id="imageUpload" accept="image/*" multiple>
@@ -384,7 +373,7 @@
                 <span> N/A: Não Aplicável</span>
             </div>
             
-            <!-- Área para exibir as imagens no relatório -->
+            <!-- Área para exibir as imagens no relatório com nome -->
             <div id="reportImagesContainer" style="margin-top: 20px;">
                 <h3>Imagens Anexadas:</h3>
                 <div class="report-images" id="reportImages"></div>
@@ -408,9 +397,9 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const uploadedImages = []; // Armazenar as imagens carregadas
+            const uploadedImages = []; // Armazenar as imagens carregadas (com nome e src)
             
-            // Gerenciar upload de imagens
+            // Gerenciar upload de imagens com nome
             document.getElementById('imageUpload').addEventListener('change', function(e) {
                 const files = e.target.files;
                 const previewContainer = document.getElementById('imagePreview');
@@ -423,13 +412,26 @@
                     const reader = new FileReader();
                     
                     reader.onload = function(e) {
-                        // Adicionar ao array de imagens
-                        uploadedImages.push(e.target.result);
+                        // Adicionar ao array de imagens (com nome e src)
+                        uploadedImages.push({
+                            name: file.name,
+                            src: e.target.result
+                        });
                         
-                        // Mostrar preview
+                        // Mostrar preview com nome
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'image-preview-item';
+                        
                         const img = document.createElement('img');
                         img.src = e.target.result;
-                        previewContainer.appendChild(img);
+                        
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'image-name';
+                        nameSpan.textContent = file.name;
+                        
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(nameSpan);
+                        previewContainer.appendChild(previewItem);
                     }
                     
                     reader.readAsDataURL(file);
@@ -499,7 +501,7 @@
                 tbody.appendChild(newRow);
             });
             
-            // Gerar relatório
+            // Gerar relatório com imagens e nomes
             document.getElementById('generateReport').addEventListener('click', function() {
                 if (!document.getElementById('inspectionForm').checkValidity()) {
                     alert('Por favor, preencha todos os campos obrigatórios.');
@@ -587,15 +589,27 @@
                 document.getElementById('reportVerificationResponsible').textContent = 
                     document.getElementById('verificationResponsible').value;
                 
-                // Mostrar imagens no relatório
+                // Mostrar imagens no relatório com nome
                 const reportImagesContainer = document.getElementById('reportImages');
                 reportImagesContainer.innerHTML = '';
                 
                 if (uploadedImages.length > 0) {
-                    uploadedImages.forEach(imgSrc => {
+                    document.getElementById('reportImagesContainer').style.display = 'block';
+                    
+                    uploadedImages.forEach(image => {
+                        const imageItem = document.createElement('div');
+                        imageItem.className = 'report-image-item';
+                        
                         const img = document.createElement('img');
-                        img.src = imgSrc;
-                        reportImagesContainer.appendChild(img);
+                        img.src = image.src;
+                        
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'report-image-name';
+                        nameSpan.textContent = image.name;
+                        
+                        imageItem.appendChild(img);
+                        imageItem.appendChild(nameSpan);
+                        reportImagesContainer.appendChild(imageItem);
                     });
                 } else {
                     document.getElementById('reportImagesContainer').style.display = 'none';
