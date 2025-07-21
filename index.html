@@ -5,64 +5,375 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Inspeção de Peças Acabadas</title>
     <style>
-        /* ... (mantenha todos os estilos anteriores) ... */
-        
-        .image-preview-item {
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .header-info {
             display: flex;
-            flex-direction: column;
-            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .test-row {
+            display: flex;
             margin-bottom: 10px;
         }
-        .image-preview-item img {
+        .test-row div {
+            flex: 1;
+            margin-right: 10px;
+        }
+        .test-row div:last-child {
+            margin-right: 0;
+        }
+        .nbr-checkboxes {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .nbr-checkbox {
+            display: flex;
+            align-items: center;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .signature-area {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .signature-box {
+            width: 45%;
+            border-top: 1px solid #000;
+            padding-top: 5px;
+            text-align: center;
+        }
+        .hidden {
+            display: none;
+        }
+        #report {
+            margin-top: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        .print-button {
+            background-color: #2196F3;
+            margin-left: 10px;
+        }
+        .print-button:hover {
+            background-color: #0b7dda;
+        }
+        .image-upload {
+            margin: 20px 0;
+        }
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .image-preview img {
             max-width: 150px;
             max-height: 150px;
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .image-name {
-            margin-top: 5px;
-            font-size: 12px;
-            text-align: center;
-            word-break: break-all;
-            max-width: 150px;
-        }
-        .report-image-item {
+        .report-images {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
         }
-        .report-image-item img {
+        .report-images img {
             max-width: 200px;
             max-height: 200px;
             border: 1px solid #ddd;
         }
-        .report-image-name {
-            margin-top: 5px;
-            font-size: 12px;
-            text-align: center;
-            word-break: break-all;
-            max-width: 200px;
-        }
     </style>
 </head>
 <body>
-    <!-- ... (mantenha todo o HTML anterior até a seção de upload de imagens) ... -->
-    
-    <!-- Seção de upload de imagens (modificada) -->
-    <div class="form-group image-upload">
-        <label for="imageUpload">Anexar Fotos/Imagens:</label>
-        <input type="file" id="imageUpload" accept="image/*" multiple>
-        <div class="image-preview" id="imagePreview"></div>
+    <div class="container">
+        <h1>Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+        
+        <form id="inspectionForm">
+            <div class="header-info">
+                <div class="form-group" style="width: 48%;">
+                    <label for="productionNumber">Nº da Ficha de Produção:</label>
+                    <input type="number" id="productionNumber" style="width: 120px;" required>
+                </div>
+                <div class="form-group" style="width: 48%;">
+                    <label for="inspectionDate">Data:</label>
+                    <input type="date" id="inspectionDate" style="width: 150px;" required>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="quantityToCheck">Quantidade a verificar:</label>
+                <input type="text" id="quantityToCheck" value="Acima de 500 peças verificar plano de amostragem" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="whenToExecute">Quando executar a inspeção:</label>
+                <input type="text" id="whenToExecute" value="Peças Acabadas" required>
+            </div>
+            
+            <h2>Informações do Produto</h2>
+            <table id="productTable">
+                <thead>
+                    <tr>
+                        <th>Descrição do produto</th>
+                        <th style="width: 15%;">Lote</th>
+                        <th style="width: 15%;">Data</th>
+                        <th style="width: 10%;">Quant.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="product-desc" required></td>
+                        <td><input type="text" class="product-lot" style="width: 100%;" required></td>
+                        <td><input type="date" class="product-date" style="width: 100%;" required></td>
+                        <td><input type="number" class="product-quantity" style="width: 100%;" required></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addProductRow">+ Adicionar outra linha</button>
+            
+            <h2>Ensaios Realizados</h2>
+            <table id="testsTable">
+                <thead>
+                    <tr>
+                        <th>Ensaio Realizado</th>
+                        <th>Amostras</th>
+                        <th>Método</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select class="test-name" required>
+                                <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+                                <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+                                <option value="Vácuo">Vácuo</option>
+                                <option value="Dimensional">Dimensional</option>
+                                <option value="Marcações">Marcações</option>
+                                <option value="Achatamento">Achatamento</option>
+                                <option value="Comportamento ao calor">Comportamento ao calor</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-samples" required>
+                                <option value="03" selected>03</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="Plano de amostragem">Plano de amostragem</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-method" required>
+                                <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
+                                <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
+                                <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
+                                <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
+                                <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
+                                <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
+                                <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
+                                <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
+                                <option value="Outro método">Outro método</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO">APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
+            
+            <div class="form-group">
+                <label>Obs: Testes conforme NBR:</label>
+                <div class="nbr-checkboxes">
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr7362" checked>
+                        <label for="nbr7362" style="font-weight: normal; margin-left: 5px;">7362</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr5688">
+                        <label for="nbr5688" style="font-weight: normal; margin-left: 5px;">5688</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr7665">
+                        <label for="nbr7665" style="font-weight: normal; margin-left: 5px;">7665</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr5647">
+                        <label for="nbr5647" style="font-weight: normal; margin-left: 5px;">5647</label>
+                    </div>
+                    <div class="nbr-checkbox">
+                        <input type="checkbox" id="nbr5648">
+                        <label for="nbr5648" style="font-weight: normal; margin-left: 5px;">5648</label>
+                    </div>
+                    <div style="margin-left: 10px;">
+                        N/A: Não Aplicável
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Seção de upload de imagens -->
+            <div class="form-group image-upload">
+                <label for="imageUpload">Anexar Fotos/Imagens:</label>
+                <input type="file" id="imageUpload" accept="image/*" multiple>
+                <div class="image-preview" id="imagePreview"></div>
+            </div>
+            
+            <div class="signature-area">
+                <div class="form-group signature-box">
+                    <label>Responsável pelos testes:</label>
+                    <input type="text" id="testResponsible" required>
+                </div>
+                <div class="form-group signature-box">
+                    <label>Responsável pela verificação:</label>
+                    <input type="text" id="verificationResponsible" required>
+                </div>
+            </div>
+            
+            <button type="button" id="generateReport">Gerar Relatório</button>
+        </form>
+        
+        <div id="report" class="hidden">
+            <h1 id="reportTitle">RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+            
+            <div class="header-info">
+                <div><strong>Nº da Ficha de Produção:</strong> <span id="reportProductionNumber"></span></div>
+                <div><strong>Data:</strong> <span id="reportInspectionDate"></span></div>
+            </div>
+            
+            <div>
+                <strong>Quantidade a verificar:</strong> <span id="reportQuantityToCheck"></span>
+            </div>
+            
+            <div>
+                <strong>Quando executar a inspeção:</strong> <span id="reportWhenToExecute"></span>
+            </div>
+            
+            <h2>Informações do Produto</h2>
+            <table id="reportProductTable">
+                <thead>
+                    <tr>
+                        <th>Descrição do produto</th>
+                        <th>Lote</th>
+                        <th>Data</th>
+                        <th>Quant.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Produtos serão adicionados aqui pelo JavaScript -->
+                </tbody>
+            </table>
+            
+            <h2>Ensaios Realizados</h2>
+            <table id="reportTestsTable">
+                <thead>
+                    <tr>
+                        <th>Ensaio Realizado</th>
+                        <th>Amostras</th>
+                        <th>Método</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Testes serão adicionados aqui pelo JavaScript -->
+                </tbody>
+            </table>
+            
+            <div>
+                <strong>Obs: Testes conforme NBR:</strong> 
+                <span id="reportNbrs"></span>
+                <span> N/A: Não Aplicável</span>
+            </div>
+            
+            <!-- Área para exibir as imagens no relatório -->
+            <div id="reportImagesContainer" style="margin-top: 20px;">
+                <h3>Imagens Anexadas:</h3>
+                <div class="report-images" id="reportImages"></div>
+            </div>
+            
+            <div class="signature-area">
+                <div class="signature-box">
+                    <div>Responsável pelos testes:</div>
+                    <div id="reportTestResponsible"></div>
+                </div>
+                <div class="signature-box">
+                    <div>Responsável pela verificação:</div>
+                    <div id="reportVerificationResponsible"></div>
+                </div>
+            </div>
+            
+            <button type="button" id="printReport" class="print-button">Imprimir Relatório</button>
+            <button type="button" id="backToForm">Voltar ao Formulário</button>
+        </div>
     </div>
-    
-    <!-- ... (mantenha o resto do HTML anterior) ... -->
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const uploadedImages = []; // Armazenar as imagens carregadas (agora com nome)
+            const uploadedImages = []; // Armazenar as imagens carregadas
             
-            // Gerenciar upload de imagens (modificado para incluir nome)
+            // Gerenciar upload de imagens
             document.getElementById('imageUpload').addEventListener('change', function(e) {
                 const files = e.target.files;
                 const previewContainer = document.getElementById('imagePreview');
@@ -75,66 +386,199 @@
                     const reader = new FileReader();
                     
                     reader.onload = function(e) {
-                        // Adicionar ao array de imagens (com nome)
-                        uploadedImages.push({
-                            name: file.name,
-                            src: e.target.result
-                        });
+                        // Adicionar ao array de imagens
+                        uploadedImages.push(e.target.result);
                         
-                        // Mostrar preview com nome
-                        const previewItem = document.createElement('div');
-                        previewItem.className = 'image-preview-item';
-                        
+                        // Mostrar preview
                         const img = document.createElement('img');
                         img.src = e.target.result;
-                        
-                        const nameSpan = document.createElement('span');
-                        nameSpan.className = 'image-name';
-                        nameSpan.textContent = file.name;
-                        
-                        previewItem.appendChild(img);
-                        previewItem.appendChild(nameSpan);
-                        previewContainer.appendChild(previewItem);
+                        previewContainer.appendChild(img);
                     }
                     
                     reader.readAsDataURL(file);
                 }
             });
             
-            // ... (mantenha todas as outras funções JavaScript anteriores) ...
+            // Adicionar nova linha de produto
+            document.getElementById('addProductRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#productTable tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" class="product-desc" required></td>
+                    <td><input type="text" class="product-lot" style="width: 100%;" required></td>
+                    <td><input type="date" class="product-date" style="width: 100%;" required></td>
+                    <td><input type="number" class="product-quantity" style="width: 100%;" required></td>
+                `;
+                tbody.appendChild(newRow);
+            });
             
-            // Modificar a função generateReport para mostrar imagens com nome
+            // Adicionar nova linha de teste
+            document.getElementById('addTestRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#testsTable tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td>
+                        <select class="test-name" required>
+                            <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+                            <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+                            <option value="Vácuo">Vácuo</option>
+                            <option value="Dimensional">Dimensional</option>
+                            <option value="Marcações">Marcações</option>
+                            <option value="Achatamento">Achatamento</option>
+                            <option value="Comportamento ao calor">Comportamento ao calor</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-samples" required>
+                            <option value="03" selected>03</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="Plano de amostragem">Plano de amostragem</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-method" required>
+                            <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
+                            <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
+                            <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
+                            <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
+                            <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
+                            <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
+                            <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
+                            <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
+                            <option value="Outro método">Outro método</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-result" required>
+                            <option value="APROVADO">APROVADO</option>
+                            <option value="REPROVADO">REPROVADO</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </td>
+                `;
+                tbody.appendChild(newRow);
+            });
+            
+            // Gerar relatório
             document.getElementById('generateReport').addEventListener('click', function() {
-                // ... (mantenha todo o código anterior da função) ...
+                if (!document.getElementById('inspectionForm').checkValidity()) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
                 
-                // Mostrar imagens no relatório (modificado para incluir nome)
+                // Preencher informações básicas
+                document.getElementById('reportProductionNumber').textContent = 
+                    document.getElementById('productionNumber').value;
+                
+                const inspectionDate = new Date(document.getElementById('inspectionDate').value);
+                document.getElementById('reportInspectionDate').textContent = 
+                    inspectionDate.toLocaleDateString('pt-BR');
+                
+                document.getElementById('reportQuantityToCheck').textContent = 
+                    document.getElementById('quantityToCheck').value;
+                
+                document.getElementById('reportWhenToExecute').textContent = 
+                    document.getElementById('whenToExecute').value;
+                
+                // Preencher tabela de produtos
+                const productTableBody = document.querySelector('#reportProductTable tbody');
+                productTableBody.innerHTML = '';
+                
+                const productRows = document.querySelectorAll('#productTable tbody tr');
+                productRows.forEach(row => {
+                    const desc = row.querySelector('.product-desc').value;
+                    const lot = row.querySelector('.product-lot').value;
+                    const date = new Date(row.querySelector('.product-date').value);
+                    const quant = row.querySelector('.product-quantity').value;
+                    
+                    if (desc && lot && date && quant) {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${desc}</td>
+                            <td>${lot}</td>
+                            <td>${date.toLocaleDateString('pt-BR')}</td>
+                            <td>${quant}</td>
+                        `;
+                        productTableBody.appendChild(newRow);
+                    }
+                });
+                
+                // Preencher tabela de testes
+                const testsTableBody = document.querySelector('#reportTestsTable tbody');
+                testsTableBody.innerHTML = '';
+                
+                const testRows = document.querySelectorAll('#testsTable tbody tr');
+                testRows.forEach(row => {
+                    const name = row.querySelector('.test-name').value;
+                    const samples = row.querySelector('.test-samples').value;
+                    const method = row.querySelector('.test-method').value;
+                    const result = row.querySelector('.test-result').value;
+                    
+                    if (name && samples && method && result) {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${name}</td>
+                            <td>${samples}</td>
+                            <td>${method}</td>
+                            <td>${result}</td>
+                        `;
+                        testsTableBody.appendChild(newRow);
+                    }
+                });
+                
+                // Preencher NBRs
+                const nbrs = [];
+                if (document.getElementById('nbr7362').checked) nbrs.push('7362');
+                if (document.getElementById('nbr5688').checked) nbrs.push('5688');
+                if (document.getElementById('nbr7665').checked) nbrs.push('7665');
+                if (document.getElementById('nbr5647').checked) nbrs.push('5647');
+                if (document.getElementById('nbr5648').checked) nbrs.push('5648');
+                
+                let nbrsText = '';
+                if (nbrs.length > 0) {
+                    nbrsText = '(X) ' + nbrs.join(' ( ) ') + ' ( ) ';
+                }
+                document.getElementById('reportNbrs').textContent = nbrsText;
+                
+                // Preencher responsáveis
+                document.getElementById('reportTestResponsible').textContent = 
+                    document.getElementById('testResponsible').value;
+                
+                document.getElementById('reportVerificationResponsible').textContent = 
+                    document.getElementById('verificationResponsible').value;
+                
+                // Mostrar imagens no relatório
                 const reportImagesContainer = document.getElementById('reportImages');
                 reportImagesContainer.innerHTML = '';
                 
                 if (uploadedImages.length > 0) {
-                    uploadedImages.forEach(image => {
-                        const imageItem = document.createElement('div');
-                        imageItem.className = 'report-image-item';
-                        
+                    uploadedImages.forEach(imgSrc => {
                         const img = document.createElement('img');
-                        img.src = image.src;
-                        
-                        const nameSpan = document.createElement('span');
-                        nameSpan.className = 'report-image-name';
-                        nameSpan.textContent = image.name;
-                        
-                        imageItem.appendChild(img);
-                        imageItem.appendChild(nameSpan);
-                        reportImagesContainer.appendChild(imageItem);
+                        img.src = imgSrc;
+                        reportImagesContainer.appendChild(img);
                     });
                 } else {
                     document.getElementById('reportImagesContainer').style.display = 'none';
                 }
                 
-                // ... (mantenha o resto do código da função) ...
+                // Mostrar relatório e esconder formulário
+                document.getElementById('inspectionForm').classList.add('hidden');
+                document.getElementById('report').classList.remove('hidden');
             });
             
-            // ... (mantenha as outras funções JavaScript) ...
+            // Voltar ao formulário
+            document.getElementById('backToForm').addEventListener('click', function() {
+                document.getElementById('inspectionForm').classList.remove('hidden');
+                document.getElementById('report').classList.add('hidden');
+            });
+            
+            // Imprimir relatório
+            document.getElementById('printReport').addEventListener('click', function() {
+                window.print();
+            });
         });
     </script>
 </body>
