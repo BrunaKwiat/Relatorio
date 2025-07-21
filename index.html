@@ -141,23 +141,23 @@
             </div>
             
             <h2>Informações do Produto</h2>
-            <table id="productTable">
+           <table id="productTable">
                 <thead>
-                    <tr>
-                        <th>Descrição do produto</th>
-                        <th>Lote</th>
-                        <th>Data</th>
-                        <th>Quant.</th>
-                    </tr>
+                     <tr>
+                         <th>Descrição do produto</th>
+                         <th style="width: 15%;">Lote</th>
+                         <th style="width: 15%;">Data</th>
+                         <th style="width: 10%;">Quant.</th>
+                        </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" class="product-desc" required></td>
-                        <td><input type="text" class="product-lot" required></td>
-                        <td><input type="date" class="product-date" required></td>
-                        <td><input type="number" class="product-quantity" required></td>
-                    </tr>
-                </tbody>
+                 <tbody>
+                <tr>
+                    <td><input type="text" class="product-desc" required></td>
+                    <td><input type="text" class="product-lot" style="width: 100%;" required></td>
+                    <td><input type="date" class="product-date" style="width: 100%;" required></td>
+                    <td><input type="number" class="product-quantity" style="width: 100%;" required></td>
+                </tr>
+        </tbody>
             </table>
             <button type="button" id="addProductRow">+ Adicionar outra linha</button>
             
