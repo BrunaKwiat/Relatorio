@@ -133,12 +133,15 @@
             border: 1px solid #ddd;
             border-radius: 4px;
         }
-        .image-name {
+        .image-name, .report-image-name {
             margin-top: 5px;
             font-size: 12px;
             text-align: center;
             word-break: break-all;
             max-width: 150px;
+            padding: 2px 5px;
+            background-color: #f2f2f2;
+            border-radius: 3px;
         }
         .report-images {
             display: flex;
@@ -151,6 +154,7 @@
             flex-direction: column;
             align-items: center;
             margin-bottom: 10px;
+            width: calc(25% - 15px);
         }
         .report-image-item img {
             max-width: 200px;
@@ -158,15 +162,17 @@
             border: 1px solid #ddd;
         }
         .report-image-name {
-            margin-top: 5px;
-            font-size: 12px;
-            text-align: center;
-            word-break: break-all;
             max-width: 200px;
+            background-color: #e9e9e9;
         }
         #productTable td, #productTable th {
-    padding: 4px 8px;
-}
+            padding: 4px 8px;
+        }
+        @media (max-width: 768px) {
+            .report-image-item {
+                width: calc(50% - 15px);
+            }
+        }
     </style>
 </head>
 <body>
@@ -196,24 +202,24 @@
             </div>
             
            <h2>Informações do Produto</h2>
-<table id="productTable" style="width: 100%; border-collapse: collapse;">
-    <thead>
-        <tr>
-            <th style="text-align: left;">Descrição do produto</th>
-            <th style="width: 80px;">Lote</th>
-            <th style="width: 120px;">Data</th>
-            <th style="width: 60px;">Quant.</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><input type="text" class="product-desc" style="width: 100%; box-sizing: border-box;" required></td>
-            <td><input type="text" class="product-lot" style="width: 100%; box-sizing: border-box;" required></td>
-            <td><input type="date" class="product-date" style="width: 100%; box-sizing: border-box;" required></td>
-            <td><input type="number" class="product-quantity" style="width: 100%; box-sizing: border-box;" required></td>
-        </tr>
-    </tbody>
-</table>
+            <table id="productTable" style="width: 100%; border-collapse: collapse;">
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Descrição do produto</th>
+                        <th style="width: 80px;">Lote</th>
+                        <th style="width: 120px;">Data</th>
+                        <th style="width: 60px;">Quant.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="product-desc" style="width: 100%; box-sizing: border-box;" required></td>
+                        <td><input type="text" class="product-lot" style="width: 100%; box-sizing: border-box;" required></td>
+                        <td><input type="date" class="product-date" style="width: 100%; box-sizing: border-box;" required></td>
+                        <td><input type="number" class="product-quantity" style="width: 100%; box-sizing: border-box;" required></td>
+                    </tr>
+                </tbody>
+            </table>
             <button type="button" id="addProductRow">+ Adicionar outra linha</button>
             
             <h2>Ensaios Realizados</h2>
@@ -303,7 +309,6 @@
                 </div>
             </div>
             
-            <!-- Seção de upload de imagens com nome -->
             <div class="form-group image-upload">
                 <label for="imageUpload">Anexar Fotos/Imagens:</label>
                 <input type="file" id="imageUpload" accept="image/*" multiple>
@@ -376,7 +381,6 @@
                 <span> N/A: Não Aplicável</span>
             </div>
             
-            <!-- Área para exibir as imagens no relatório com nome -->
             <div id="reportImagesContainer" style="margin-top: 20px;">
                 <h3>Imagens Anexadas:</h3>
                 <div class="report-images" id="reportImages"></div>
@@ -400,9 +404,8 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const uploadedImages = []; // Armazenar as imagens carregadas (com nome e src)
+            const uploadedImages = [];
             
-            // Gerenciar upload de imagens com nome
             document.getElementById('imageUpload').addEventListener('change', function(e) {
                 const files = e.target.files;
                 const previewContainer = document.getElementById('imagePreview');
@@ -415,13 +418,11 @@
                     const reader = new FileReader();
                     
                     reader.onload = function(e) {
-                        // Adicionar ao array de imagens (com nome e src)
                         uploadedImages.push({
                             name: file.name,
                             src: e.target.result
                         });
                         
-                        // Mostrar preview com nome
                         const previewItem = document.createElement('div');
                         previewItem.className = 'image-preview-item';
                         
@@ -430,7 +431,10 @@
                         
                         const nameSpan = document.createElement('span');
                         nameSpan.className = 'image-name';
-                        nameSpan.textContent = file.name;
+                        nameSpan.textContent = file.name.length > 20 ? 
+                            file.name.substring(0, 17) + '...' : 
+                            file.name;
+                        nameSpan.title = file.name;
                         
                         previewItem.appendChild(img);
                         previewItem.appendChild(nameSpan);
@@ -441,7 +445,6 @@
                 }
             });
             
-            // Adicionar nova linha de produto
             document.getElementById('addProductRow').addEventListener('click', function() {
                 const tbody = document.querySelector('#productTable tbody');
                 const newRow = document.createElement('tr');
@@ -454,7 +457,6 @@
                 tbody.appendChild(newRow);
             });
             
-            // Adicionar nova linha de teste
             document.getElementById('addTestRow').addEventListener('click', function() {
                 const tbody = document.querySelector('#testsTable tbody');
                 const newRow = document.createElement('tr');
@@ -504,14 +506,12 @@
                 tbody.appendChild(newRow);
             });
             
-            // Gerar relatório com imagens e nomes
             document.getElementById('generateReport').addEventListener('click', function() {
                 if (!document.getElementById('inspectionForm').checkValidity()) {
                     alert('Por favor, preencha todos os campos obrigatórios.');
                     return;
                 }
                 
-                // Preencher informações básicas
                 document.getElementById('reportProductionNumber').textContent = 
                     document.getElementById('productionNumber').value;
                 
@@ -525,7 +525,6 @@
                 document.getElementById('reportWhenToExecute').textContent = 
                     document.getElementById('whenToExecute').value;
                 
-                // Preencher tabela de produtos
                 const productTableBody = document.querySelector('#reportProductTable tbody');
                 productTableBody.innerHTML = '';
                 
@@ -548,7 +547,6 @@
                     }
                 });
                 
-                // Preencher tabela de testes
                 const testsTableBody = document.querySelector('#reportTestsTable tbody');
                 testsTableBody.innerHTML = '';
                 
@@ -571,7 +569,6 @@
                     }
                 });
                 
-                // Preencher NBRs
                 const nbrs = [];
                 if (document.getElementById('nbr7362').checked) nbrs.push('7362');
                 if (document.getElementById('nbr5688').checked) nbrs.push('5688');
@@ -585,14 +582,12 @@
                 }
                 document.getElementById('reportNbrs').textContent = nbrsText;
                 
-                // Preencher responsáveis
                 document.getElementById('reportTestResponsible').textContent = 
                     document.getElementById('testResponsible').value;
                 
                 document.getElementById('reportVerificationResponsible').textContent = 
                     document.getElementById('verificationResponsible').value;
                 
-                // Mostrar imagens no relatório com nome
                 const reportImagesContainer = document.getElementById('reportImages');
                 reportImagesContainer.innerHTML = '';
                 
@@ -608,7 +603,10 @@
                         
                         const nameSpan = document.createElement('span');
                         nameSpan.className = 'report-image-name';
-                        nameSpan.textContent = image.name;
+                        nameSpan.textContent = image.name.length > 25 ? 
+                            image.name.substring(0, 22) + '...' : 
+                            image.name;
+                        nameSpan.title = image.name;
                         
                         imageItem.appendChild(img);
                         imageItem.appendChild(nameSpan);
@@ -618,18 +616,15 @@
                     document.getElementById('reportImagesContainer').style.display = 'none';
                 }
                 
-                // Mostrar relatório e esconder formulário
                 document.getElementById('inspectionForm').classList.add('hidden');
                 document.getElementById('report').classList.remove('hidden');
             });
             
-            // Voltar ao formulário
             document.getElementById('backToForm').addEventListener('click', function() {
                 document.getElementById('inspectionForm').classList.remove('hidden');
                 document.getElementById('report').classList.add('hidden');
             });
             
-            // Imprimir relatório
             document.getElementById('printReport').addEventListener('click', function() {
                 window.print();
             });
