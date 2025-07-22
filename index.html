@@ -192,25 +192,25 @@
                 <input type="text" id="whenToExecute" value="Peças Acabadas" required>
             </div>
             
-            <h2>Informações do Produto</h2>
-            <table id="productTable">
-                <thead>
-                    <tr>
-                        <th>Descrição do produto</th>
-                        <th style="width: 1%;">Lote</th>
-                        <th style="width: 3%;">Data</th>
-                        <th style="width: 1%;">Quant.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" class="product-desc" required></td>
-                        <td><input type="text" class="product-lot" style="width: 100%;" required></td>
-                        <td><input type="date" class="product-date" style="width: 100%;" required></td>
-                        <td><input type="number" class="product-quantity" style="width: 100%;" required></td>
-                    </tr>
-                </tbody>
-            </table>
+           <h2>Informações do Produto</h2>
+<table id="productTable" style="width: 100%; border-collapse: collapse;">
+    <thead>
+        <tr>
+            <th style="text-align: left;">Descrição do produto</th>
+            <th style="width: 80px;">Lote</th>
+            <th style="width: 120px;">Data</th>
+            <th style="width: 60px;">Quant.</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" class="product-desc" style="width: 100%; box-sizing: border-box;" required></td>
+            <td><input type="text" class="product-lot" style="width: 100%; box-sizing: border-box;" required></td>
+            <td><input type="date" class="product-date" style="width: 100%; box-sizing: border-box;" required></td>
+            <td><input type="number" class="product-quantity" style="width: 100%; box-sizing: border-box;" required></td>
+        </tr>
+    </tbody>
+</table>
             <button type="button" id="addProductRow">+ Adicionar outra linha</button>
             
             <h2>Ensaios Realizados</h2>
