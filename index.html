@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -172,71 +173,12 @@
             .report-image-item {
                 width: calc(50% - 15px);
             }
-            .delete-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            padding: 5px 10px;
-            cursor: pointer;
-            font-size: 12px;
-            margin-left: 5px;
         }
-        
-        .delete-btn:hover {
-            background-color: #d32f2f;
-        }
-        
-        #productTable th:last-child,
-        #productTable td:last-child,
-        #testsTable th:last-child,
-        #testsTable td:last-child {
-            width: 80px;
-            text-align: center;
-        }
-        }
-        /* Estilo para os botões de exclusão */
-    .delete-btn {
-        background-color: #f44336;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 5px 10px;
-        cursor: pointer;
-        font-size: 12px;
-        margin-left: 5px;
-        width: 80px; /* Largura fixa para alinhamento */
-        height: 30px; /* Altura similar aos inputs */
-    }
-
-    /* Ajuste para a coluna de ação */
-    #productTable th:last-child,
-    #productTable td:last-child,
-    #testsTable th:last-child,
-    #testsTable td:last-child {
-        width: 90px;
-        text-align: center;
-        vertical-align: middle; /* Alinhamento vertical */
-    }
-
-    /* Ajuste para os inputs de data */
-    .product-date {
-        height: 30px; /* Mesma altura do botão */
-        box-sizing: border-box;
-    }
-
-    /* Ajuste para os outros inputs */
-    .product-desc,
-    .product-lot,
-    .product-quantity {
-        height: 30px; /* Mesma altura do botão */
-        box-sizing: border-box;
-    }
     </style>
 </head>
 <body>
     <div class="container">
-       <!-- <h1>Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>-->
+        <h1>Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
         
         <form id="inspectionForm">
             <div class="header-info">
@@ -262,65 +204,83 @@
             
            <h2>Informações do Produto</h2>
             <table id="productTable" style="width: 100%; border-collapse: collapse;">
-    <thead>
-        <tr>
-            <th style="text-align: left;">Descrição do produto</th>
-            <th style="width: 80px; text-align: center;">Lote</th>
-            <th style="width: 120px; text-align: center;">Data</th>
-            <th style="width: 60px; text-align: center;">Quant.</th>
-            <th style="width: 90px; text-align: center;">Ação</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><input type="text" class="product-desc" style="width: 100%;" required></td>
-            <td><input type="text" class="product-lot" style="width: 100%; text-align: center;" required></td>
-            <td><input type="date" class="product-date" style="width: 100%; text-align: center;" required></td>
-            <td><input type="number" class="product-quantity" style="width: 100%; text-align: center;" required></td>
-            <td><button type="button" class="delete-btn delete-product-row" disabled>Excluir</button></td>
-        </tr>
-    </tbody>
-</table>
-        <button type="button" id="addProductRow">+ Adicionar outra linha</button>
-        
-        <h2>Ensaios Realizados</h2>
-       <table id="testsTable">
-    <thead>
-        <tr>
-            <th>Ensaio Realizado</th>
-            <th style="text-align: center;">Amostras</th>
-            <th style="text-align: center;">Método</th>
-            <th style="text-align: center;">Resultado</th>
-            <th style="width: 90px; text-align: center;">Ação</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <select class="test-name" style="height: 30px;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td>
-                <select class="test-samples" style="height: 30px; text-align: center;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td>
-                <select class="test-method" style="height: 30px; text-align: center;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td>
-                <select class="test-result" style="height: 30px; text-align: center;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td><button type="button" class="delete-btn delete-test-row" disabled>Excluir</button></td>
-        </tr>
-    </tbody>
-</table>
-        <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>  
+                <thead>
+                    <tr>
+                        <th style="text-align: left;">Descrição do produto</th>
+                        <th style="width: 80px;">Lote</th>
+                        <th style="width: 120px;">Data</th>
+                        <th style="width: 60px;">Quant.</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><input type="text" class="product-desc" style="width: 100%; box-sizing: border-box;" required></td>
+                        <td><input type="text" class="product-lot" style="width: 100%; box-sizing: border-box;" required></td>
+                        <td><input type="date" class="product-date" style="width: 100%; box-sizing: border-box;" required></td>
+                        <td><input type="number" class="product-quantity" style="width: 100%; box-sizing: border-box;" required></td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addProductRow">+ Adicionar outra linha</button>
+            
+            <h2>Ensaios Realizados</h2>
+            <table id="testsTable">
+                <thead>
+                    <tr>
+                        <th>Ensaio Realizado</th>
+                        <th>Amostras</th>
+                        <th>Método</th>
+                        <th>Resultado</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <select class="test-name" required>
+                                <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+                                <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+                                <option value="Vácuo">Vácuo</option>
+                                <option value="Dimensional">Dimensional</option>
+                                <option value="Marcações">Marcações</option>
+                                <option value="Achatamento">Achatamento</option>
+                                <option value="Comportamento ao calor">Comportamento ao calor</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-samples" required>
+                                <option value="03" selected>03</option>
+                                <option value="05">05</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="Plano de amostragem">Plano de amostragem</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-method" required>
+                                <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
+                                <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
+                                <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
+                                <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
+                                <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
+                                <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
+                                <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
+                                <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
+                                <option value="Outro método">Outro método</option>
+                            </select>
+                        </td>
+                        <td>
+                            <select class="test-result" required>
+                                <option value="APROVADO">APROVADO</option>
+                                <option value="REPROVADO">REPROVADO</option>
+                                <option value="N/A">N/A</option>
+                            </select>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
+            
             <div class="form-group">
                 <label>Obs: Testes conforme NBR:</label>
                 <div class="nbr-checkboxes">
@@ -343,8 +303,10 @@
                     <div class="nbr-checkbox">
                         <input type="checkbox" id="nbr5648">
                         <label for="nbr5648" style="font-weight: normal; margin-left: 5px;">5648</label>
-                    </div>                    
-                    
+                    </div>
+                    <div style="margin-left: 10px;">
+                        N/A: Não Aplicável
+                    </div>
                 </div>
             </div>
             
@@ -443,120 +405,226 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            // Inserir os nomes automaticamente nos campos
-            document.getElementById('testResponsible').value = 'Mateus Anacleto';
-            document.getElementById('verificationResponsible').value = 'Cleverson Owsiany';
-            
             const uploadedImages = [];
             
-                        document.getElementById('addProductRow').addEventListener('click', function() {
-                const tbody = document.querySelector('#productTable tbody');
-                const rows = tbody.querySelectorAll('tr');
+            document.getElementById('imageUpload').addEventListener('change', function(e) {
+                const files = e.target.files;
+                const previewContainer = document.getElementById('imagePreview');
+                previewContainer.innerHTML = '';
                 
-                // Habilitar botões de exclusão nas linhas existentes
-                rows.forEach(row => {
-                    const deleteBtn = row.querySelector('.delete-product-row');
-                    if (deleteBtn) deleteBtn.disabled = false;
-                });
-                
-                const newRow = document.createElement('tr');
-                // No evento addProductRow
-newRow.innerHTML = `
-    <td><input type="text" class="product-desc" style="width: 100%; height: 30px;" required></td>
-    <td><input type="text" class="product-lot" style="width: 100%; height: 30px; text-align: center;" required></td>
-    <td><input type="date" class="product-date" style="width: 100%; height: 30px; text-align: center;" required></td>
-    <td><input type="number" class="product-quantity" style="width: 100%; height: 30px; text-align: center;" required></td>
-    <td><button type="button" class="delete-btn delete-product-row">Excluir</button></td>
-`;
-
-                
-                // Adicionar evento de clique para o novo botão de exclusão
-                newRow.querySelector('.delete-product-row').addEventListener('click', function() {
-                    if (tbody.querySelectorAll('tr').length > 1) {
-                        tbody.removeChild(newRow);
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (!file.type.match('image.*')) continue;
+                    
+                    const reader = new FileReader();
+                    
+                    reader.onload = function(e) {
+                        uploadedImages.push({
+                            name: file.name,
+                            src: e.target.result
+                        });
                         
-                        // Se só restar uma linha, desabilitar seu botão de exclusão
-                        if (tbody.querySelectorAll('tr').length === 1) {
-                            tbody.querySelector('.delete-product-row').disabled = true;
-                        }
+                        const previewItem = document.createElement('div');
+                        previewItem.className = 'image-preview-item';
+                        
+                        const img = document.createElement('img');
+                        img.src = e.target.result;
+                        
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'image-name';
+                        nameSpan.textContent = file.name.length > 20 ? 
+                            file.name.substring(0, 17) + '...' : 
+                            file.name;
+                        nameSpan.title = file.name;
+                        
+                        previewItem.appendChild(img);
+                        previewItem.appendChild(nameSpan);
+                        previewContainer.appendChild(previewItem);
                     }
-                });
+                    
+                    reader.readAsDataURL(file);
+                }
+            });
+            
+            document.getElementById('addProductRow').addEventListener('click', function() {
+                const tbody = document.querySelector('#productTable tbody');
+                const newRow = document.createElement('tr');
+                newRow.innerHTML = `
+                    <td><input type="text" class="product-desc" required></td>
+                    <td><input type="text" class="product-lot" style="width: 100%;" required></td>
+                    <td><input type="date" class="product-date" style="width: 100%;" required></td>
+                    <td><input type="number" class="product-quantity" style="width: 100%;" required></td>
+                `;
+                tbody.appendChild(newRow);
             });
             
             document.getElementById('addTestRow').addEventListener('click', function() {
                 const tbody = document.querySelector('#testsTable tbody');
-                const rows = tbody.querySelectorAll('tr');
-                
-                // Habilitar botões de exclusão nas linhas existentes
-                rows.forEach(row => {
-                    const deleteBtn = row.querySelector('.delete-test-row');
-                    if (deleteBtn) deleteBtn.disabled = false;
-                });
-                
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                     <td>
-        <select class="test-name" style="height: 30px;" required>
-            <!-- opções mantidas -->
-        </select>
-    </td>
-    <td>
-        <select class="test-samples" style="height: 30px; text-align: center;" required>
-            <!-- opções mantidas -->
-        </select>
-    </td>
-    <td>
-        <select class="test-method" style="height: 30px; text-align: center;" required>
-            <!-- opções mantidas -->
-        </select>
-    </td>
-    <td>
-        <select class="test-result" style="height: 30px; text-align: center;" required>
-            <!-- opções mantidas -->
-        </select>
-    </td>
-    <td><button type="button" class="delete-btn delete-test-row">Excluir</button></td>
+                    <td>
+                        <select class="test-name" required>
+                            <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
+                            <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
+                            <option value="Vácuo">Vácuo</option>
+                            <option value="Dimensional">Dimensional</option>
+                            <option value="Marcações">Marcações</option>
+                            <option value="Achatamento">Achatamento</option>
+                            <option value="Comportamento ao calor">Comportamento ao calor</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-samples" required>
+                            <option value="03" selected>03</option>
+                            <option value="05">05</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                            <option value="20">20</option>
+                            <option value="Plano de amostragem">Plano de amostragem</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-method" required>
+                            <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
+                            <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
+                            <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
+                            <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
+                            <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
+                            <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
+                            <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
+                            <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
+                            <option value="Outro método">Outro método</option>
+                        </select>
+                    </td>
+                    <td>
+                        <select class="test-result" required>
+                            <option value="APROVADO">APROVADO</option>
+                            <option value="REPROVADO">REPROVADO</option>
+                            <option value="N/A">N/A</option>
+                        </select>
+                    </td>
                 `;
                 tbody.appendChild(newRow);
+            });
+            
+            document.getElementById('generateReport').addEventListener('click', function() {
+                if (!document.getElementById('inspectionForm').checkValidity()) {
+                    alert('Por favor, preencha todos os campos obrigatórios.');
+                    return;
+                }
                 
-                // Adicionar evento de clique para o novo botão de exclusão
-                newRow.querySelector('.delete-test-row').addEventListener('click', function() {
-                    if (tbody.querySelectorAll('tr').length > 1) {
-                        tbody.removeChild(newRow);
+                document.getElementById('reportProductionNumber').textContent = 
+                    document.getElementById('productionNumber').value;
+                
+                const inspectionDate = new Date(document.getElementById('inspectionDate').value);
+                document.getElementById('reportInspectionDate').textContent = 
+                    inspectionDate.toLocaleDateString('pt-BR');
+                
+                document.getElementById('reportQuantityToCheck').textContent = 
+                    document.getElementById('quantityToCheck').value;
+                
+                document.getElementById('reportWhenToExecute').textContent = 
+                    document.getElementById('whenToExecute').value;
+                
+                const productTableBody = document.querySelector('#reportProductTable tbody');
+                productTableBody.innerHTML = '';
+                
+                const productRows = document.querySelectorAll('#productTable tbody tr');
+                productRows.forEach(row => {
+                    const desc = row.querySelector('.product-desc').value;
+                    const lot = row.querySelector('.product-lot').value;
+                    const date = new Date(row.querySelector('.product-date').value);
+                    const quant = row.querySelector('.product-quantity').value;
+                    
+                    if (desc && lot && date && quant) {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${desc}</td>
+                            <td>${lot}</td>
+                            <td>${date.toLocaleDateString('pt-BR')}</td>
+                            <td>${quant}</td>
+                        `;
+                        productTableBody.appendChild(newRow);
+                    }
+                });
+                
+                const testsTableBody = document.querySelector('#reportTestsTable tbody');
+                testsTableBody.innerHTML = '';
+                
+                const testRows = document.querySelectorAll('#testsTable tbody tr');
+                testRows.forEach(row => {
+                    const name = row.querySelector('.test-name').value;
+                    const samples = row.querySelector('.test-samples').value;
+                    const method = row.querySelector('.test-method').value;
+                    const result = row.querySelector('.test-result').value;
+                    
+                    if (name && samples && method && result) {
+                        const newRow = document.createElement('tr');
+                        newRow.innerHTML = `
+                            <td>${name}</td>
+                            <td>${samples}</td>
+                            <td>${method}</td>
+                            <td>${result}</td>
+                        `;
+                        testsTableBody.appendChild(newRow);
+                    }
+                });
+                
+                const nbrs = [];
+                if (document.getElementById('nbr7362').checked) nbrs.push('7362');
+                if (document.getElementById('nbr5688').checked) nbrs.push('5688');
+                if (document.getElementById('nbr7665').checked) nbrs.push('7665');
+                if (document.getElementById('nbr5647').checked) nbrs.push('5647');
+                if (document.getElementById('nbr5648').checked) nbrs.push('5648');
+                
+                let nbrsText = '';
+                if (nbrs.length > 0) {
+                    nbrsText = '(X) ' + nbrs.join(' ( ) ') + ' ( ) ';
+                }
+                document.getElementById('reportNbrs').textContent = nbrsText;
+                
+                document.getElementById('reportTestResponsible').textContent = 
+                    document.getElementById('testResponsible').value;
+                
+                document.getElementById('reportVerificationResponsible').textContent = 
+                    document.getElementById('verificationResponsible').value;
+                
+                const reportImagesContainer = document.getElementById('reportImages');
+                reportImagesContainer.innerHTML = '';
+                
+                if (uploadedImages.length > 0) {
+                    document.getElementById('reportImagesContainer').style.display = 'block';
+                    
+                    uploadedImages.forEach(image => {
+                        const imageItem = document.createElement('div');
+                        imageItem.className = 'report-image-item';
                         
-                        // Se só restar uma linha, desabilitar seu botão de exclusão
-                        if (tbody.querySelectorAll('tr').length === 1) {
-                            tbody.querySelector('.delete-test-row').disabled = true;
-                        }
-                    }
-                });
-            });
-            
-            // Adicionar eventos de clique para os botões de exclusão iniciais (se houver mais de uma linha)
-            document.querySelectorAll('.delete-product-row').forEach(btn => {
-                if (document.querySelectorAll('#productTable tbody tr').length > 1) {
-                    btn.disabled = false;
+                        const img = document.createElement('img');
+                        img.src = image.src;
+                        
+                        const nameSpan = document.createElement('span');
+                        nameSpan.className = 'report-image-name';
+                        nameSpan.textContent = image.name.length > 25 ? 
+                            image.name.substring(0, 22) + '...' : 
+                            image.name;
+                        nameSpan.title = image.name;
+                        
+                        imageItem.appendChild(img);
+                        imageItem.appendChild(nameSpan);
+                        reportImagesContainer.appendChild(imageItem);
+                    });
+                } else {
+                    document.getElementById('reportImagesContainer').style.display = 'none';
                 }
-                btn.addEventListener('click', function() {
-                    const row = this.closest('tr');
-                    if (document.querySelectorAll('#productTable tbody tr').length > 1) {
-                        row.parentNode.removeChild(row);
-                    }
-                });
+                
+                document.getElementById('inspectionForm').classList.add('hidden');
+                document.getElementById('report').classList.remove('hidden');
             });
             
-            document.querySelectorAll('.delete-test-row').forEach(btn => {
-                if (document.querySelectorAll('#testsTable tbody tr').length > 1) {
-                    btn.disabled = false;
-                }
-                btn.addEventListener('click', function() {
-                    const row = this.closest('tr');
-                    if (document.querySelectorAll('#testsTable tbody tr').length > 1) {
-                        row.parentNode.removeChild(row);
-                    }
-                });
+            document.getElementById('backToForm').addEventListener('click', function() {
+                document.getElementById('inspectionForm').classList.remove('hidden');
+                document.getElementById('report').classList.add('hidden');
             });
-            
             
             document.getElementById('printReport').addEventListener('click', function() {
                 window.print();
