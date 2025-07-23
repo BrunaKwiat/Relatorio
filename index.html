@@ -430,9 +430,13 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const uploadedImages = [];
+        // Inserir os nomes automaticamente nos campos
+        document.getElementById('testResponsible').value = 'Mateus Anacleto';
+        document.getElementById('verificationResponsible').value = 'Cleverson Owsiany';
+        
+        const uploadedImages = [];
             
-            document.getElementById('imageUpload').addEventListener('change', function(e) {
+             document.getElementById('imageUpload').addEventListener('change', function(e) {
                 const files = e.target.files;
                 const previewContainer = document.getElementById('imagePreview');
                 previewContainer.innerHTML = '';
