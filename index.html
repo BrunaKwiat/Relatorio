@@ -403,8 +403,12 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const uploadedImages = [];
+       document.addEventListener('DOMContentLoaded', function() {
+        // Inserir os nomes automaticamente nos campos
+        document.getElementById('testResponsible').value = 'Mateus Anacleto';
+        document.getElementById('verificationResponsible').value = 'Cleverson Owsiany';
+        
+        const uploadedImages = [];
             
             document.getElementById('imageUpload').addEventListener('change', function(e) {
                 const files = e.target.files;
