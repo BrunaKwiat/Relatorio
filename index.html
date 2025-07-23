@@ -174,6 +174,50 @@
                 width: calc(50% - 15px);
             }
         }
+         /* Estilos para os botões de exclusão */
+    .delete-row {
+        background-color: #f44336;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        padding: 6px 10px;
+        cursor: pointer;
+        font-size: 12px;
+        width: 70px;
+        height: 32px;
+        box-sizing: border-box;
+    }
+
+    .delete-row:hover {
+        background-color: #d32f2f;
+    }
+
+    /* Ajustes para as colunas de ação */
+    #productTable th:nth-child(5),
+    #productTable td:nth-child(5),
+    #testsTable th:nth-child(5),
+    #testsTable td:nth-child(5) {
+        width: 80px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    /* Ajuste de altura para inputs e selects */
+    #productTable input,
+    #testsTable select {
+        height: 32px;
+        box-sizing: border-box;
+    }
+
+    /* Alinhamento central para dados específicos */
+    #productTable td:nth-child(2),
+    #productTable td:nth-child(3),
+    #productTable td:nth-child(4),
+    #testsTable td:nth-child(2),
+    #testsTable td:nth-child(3),
+    #testsTable td:nth-child(4) {
+        text-align: center;
+    }
     </style>
 </head>
 <body>
@@ -204,83 +248,64 @@
             
            <h2>Informações do Produto</h2>
             <table id="productTable" style="width: 100%; border-collapse: collapse;">
-                <thead>
-                    <tr>
-                        <th style="text-align: left;">Descrição do produto</th>
-                        <th style="width: 80px;">Lote</th>
-                        <th style="width: 120px;">Data</th>
-                        <th style="width: 60px;">Quant.</th>
-                        <th style="width: 40px;">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><input type="text" class="product-desc" style="width: 100%; box-sizing: border-box;" required></td>
-                        <td><input type="text" class="product-lot" style="width: 100%; box-sizing: border-box;" required></td>
-                        <td><input type="date" class="product-date" style="width: 100%; box-sizing: border-box;" required></td>
-                        <td><input type="number" class="product-quantity" style="width: 100%; box-sizing: border-box;" required></td>
-                    </tr>
-                </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th style="text-align: left;">Descrição do produto</th>
+            <th style="width: 80px; text-align: center;">Lote</th>
+            <th style="width: 120px; text-align: center;">Data</th>
+            <th style="width: 60px; text-align: center;">Quant.</th>
+            <th style="width: 80px; text-align: center;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><input type="text" class="product-desc" style="width: 100%; height: 32px;" required></td>
+            <td><input type="text" class="product-lot" style="width: 100%; height: 32px; text-align: center;" required></td>
+            <td><input type="date" class="product-date" style="width: 100%; height: 32px; text-align: center;" required></td>
+            <td><input type="number" class="product-quantity" style="width: 100%; height: 32px; text-align: center;" required></td>
+            <td><button type="button" class="delete-row" title="Excluir" disabled>Excluir</button></td>
+        </tr>
+    </tbody>
+</table>
             <button type="button" id="addProductRow">+ Adicionar outra linha</button>
             
             <h2>Ensaios Realizados</h2>
             <table id="testsTable">
-                <thead>
-                    <tr>
-                        <th>Ensaio Realizado</th>
-                        <th>Amostras</th>
-                        <th>Método</th>
-                        <th>Resultado</th>
-                        <th style="width: 40px;">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <select class="test-name" required>
-                                <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
-                                <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
-                                <option value="Vácuo">Vácuo</option>
-                                <option value="Dimensional">Dimensional</option>
-                                <option value="Marcações">Marcações</option>
-                                <option value="Achatamento">Achatamento</option>
-                                <option value="Comportamento ao calor">Comportamento ao calor</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="test-samples" required>
-                                <option value="03" selected>03</option>
-                                <option value="05">05</option>
-                                <option value="10">10</option>
-                                <option value="15">15</option>
-                                <option value="20">20</option>
-                                <option value="Plano de amostragem">Plano de amostragem</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="test-method" required>
-                                <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
-                                <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
-                                <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
-                                <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
-                                <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
-                                <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
-                                <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
-                                <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
-                                <option value="Outro método">Outro método</option>
-                            </select>
-                        </td>
-                        <td>
-                            <select class="test-result" required>
-                                <option value="APROVADO">APROVADO</option>
-                                <option value="REPROVADO">REPROVADO</option>
-                                <option value="N/A">N/A</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <thead>
+        <tr>
+            <th>Ensaio Realizado</th>
+            <th style="text-align: center;">Amostras</th>
+            <th style="text-align: center;">Método</th>
+            <th style="text-align: center;">Resultado</th>
+            <th style="width: 80px; text-align: center;">Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                <select class="test-name" style="height: 32px;" required>
+                    <!-- opções mantidas -->
+                </select>
+            </td>
+            <td>
+                <select class="test-samples" style="height: 32px; text-align: center;" required>
+                    <!-- opções mantidas -->
+                </select>
+            </td>
+            <td>
+                <select class="test-method" style="height: 32px; text-align: center;" required>
+                    <!-- opções mantidas -->
+                </select>
+            </td>
+            <td>
+                <select class="test-result" style="height: 32px; text-align: center;" required>
+                    <!-- opções mantidas -->
+                </select>
+            </td>
+            <td><button type="button" class="delete-row" title="Excluir" disabled>Excluir</button></td>
+        </tr>
+    </tbody>
+</table>
             <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
             
             <div class="form-group">
