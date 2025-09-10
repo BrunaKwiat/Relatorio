@@ -1,203 +1,243 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-br">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>RQ-504-01 Registro de Inspeção</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f6f9fc;
-      margin: 20px;
-    }
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</title>
+    <meta name="color-scheme" content="light only" />
+    <meta name="theme-color" content="#0E3554" />
 
-    h1 {
-      text-align: center;
-      font-size: 18px;
-      margin-bottom: 20px;
-    }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f6f9fc;
+            margin: 0;
+            padding: 0;
+        }
 
-    .form-section {
-      margin-bottom: 20px;
-    }
+        .container {
+            width: 95%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 20px;
+        }
 
-    label {
-      font-weight: bold;
-    }
+        header.topbar {
+            background: #0E3554;
+            padding: 12px 20px;
+            color: #fff;
+        }
 
-    input, select, textarea {
-      border: 1px solid #ccc;
-      border-radius: 6px; /* deixa arredondado */
-      padding: 6px;
-      font-size: 14px;
-      width: 100%;
-      box-sizing: border-box;
-    }
+        .brand img {
+            height: 40px;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 15px 0;
-      background: #fff;
-    }
+        form {
+            margin-top: 20px;
+        }
 
-    th, td {
-      border: 1px solid #999;
-      padding: 8px;
-      font-size: 14px;
-      text-align: center;
-    }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px 20px;
+            margin-bottom: 20px;
+        }
 
-    th {
-      background: #f1f1f1;
-    }
+        .grid label {
+            font-weight: 600;
+        }
 
-    .assinatura {
-      margin-top: 30px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 20px;
-    }
+        .grid input,
+        select {
+            padding: 6px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
 
-    .assinatura div {
-      text-align: center;
-    }
+        /* Tabelas */
+        .table-container {
+            margin: 20px 0;
+            overflow-x: auto;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
 
-    .obs {
-      margin-top: 15px;
-      font-size: 14px;
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
 
-    .obs input {
-      margin-left: 5px;
-      margin-right: 15px;
-    }
-  </style>
+        th,
+        td {
+            padding: 8px 10px;
+            text-align: center;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            white-space: normal;
+            word-wrap: break-word;
+        }
+
+        th {
+            background: #f5f7fa;
+            font-weight: 600;
+        }
+
+        fieldset {
+            border: 1px solid #ddd;
+            padding: 12px;
+            margin: 20px 0;
+            border-radius: 6px;
+            background: #fff;
+        }
+
+        legend {
+            font-weight: 600;
+            padding: 0 6px;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .btn--primary {
+            background: #0E3554;
+            color: #fff;
+        }
+
+        .btn--secondary {
+            background: #f5f7fa;
+            border: 1px solid #ccc;
+        }
+
+        footer.rodape {
+            text-align: center;
+            padding: 20px;
+            background: #f5f7fa;
+            margin-top: 40px;
+            font-size: 14px;
+        }
+    </style>
 </head>
+
 <body>
+    <header class="topbar" role="banner">
+        <div class="container topbar__inner">
+            <div class="brand" aria-label="Shiva Conexões">
+                <img src="shiva.png" alt="Shiva Conexões" />
+            </div>
+        </div>
+    </header>
 
-  <h1>RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+    <main class="layout" id="app" role="main">
+        <div class="container">
+            <form id="formRelatorio" novalidate>
+                <fieldset>
+                    <div class="grid">
+                        <label for="numeroFicha">Nº da Ficha de Produção:</label>
+                        <input required id="numeroFicha" name="numeroFicha" autocomplete="off" inputmode="numeric" />
 
-  <!-- Cabeçalho -->
-  <div class="form-section">
-    <label for="ficha">Nº da Ficha de Produção:</label>
-    <input type="text" id="ficha" name="ficha">
+                        <label for="quantidadeverificar">Quantidade a Verificar:</label>
+                        <input id="quantidadeverificar" name="quantidadeverificar" autocomplete="organization" />
 
-    <label for="data">Data:</label>
-    <input type="date" id="data" name="data">
+                        <label for="executarinspeção">Quantidade executar a Inspeção:</label>
+                        <input id="executarinspeção" name="executarinspeção" autocomplete="name" />
 
-    <label for="quantidade">Quantidade a verificar:</label>
-    <input type="text" id="quantidade" name="quantidade" placeholder="Ex: Acima de 500 peças verificar plano de amostragem">
+                        <label for="ordemProducao">Empenho:</label>
+                        <input id="ordemProducao" name="ordemProducao" autocomplete="off" inputmode="numeric" />
+                    </div>
+                </fieldset>
 
-    <label for="inspecao">Quando executar a inspeção:</label>
-    <input type="text" id="inspecao" name="inspecao" placeholder="Peças Acabadas">
-  </div>
+                <!-- Tabela de identificação do produto -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Descrição do produto</th>
+                                <th>Lote</th>
+                                <th>Data</th>
+                                <th>Quant.</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" name="descricao1"></td>
+                                <td><input type="text" name="lote1"></td>
+                                <td><input type="date" name="data1"></td>
+                                <td><input type="number" name="quantidade1"></td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" name="descricao2"></td>
+                                <td><input type="text" name="lote2"></td>
+                                <td><input type="date" name="data2"></td>
+                                <td><input type="number" name="quantidade2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-  <!-- Tabela descrição produto -->
-  <table>
-    <thead>
-      <tr>
-        <th>Descrição do produto</th>
-        <th>Lote</th>
-        <th>Data</th>
-        <th>Quant.</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><input type="text"></td>
-        <td><input type="text"></td>
-        <td><input type="date"></td>
-        <td><input type="number"></td>
-      </tr>
-      <tr>
-        <td><input type="text"></td>
-        <td><input type="text"></td>
-        <td><input type="date"></td>
-        <td><input type="number"></td>
-      </tr>
-    </tbody>
-  </table>
+                <!-- Tabela de ensaios -->
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Ensaio Realizado</th>
+                                <th>Amostras</th>
+                                <th>Método</th>
+                                <th>Resultado</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Pressão Hidrostática (PHI)</td>
+                                <td>0,5 Kgf/cm² x 5 min</td>
+                                <td><input type="checkbox" name="pressao_hidrostatica_phi"></td>
+                                <td><input type="text" name="resultado_phi"></td>
+                            </tr>
+                            <tr>
+                                <td>Pressão Hidrostática (Junta elástica)</td>
+                                <td>2 Kgf/cm² x 10 min</td>
+                                <td><input type="checkbox" name="pressao_hidrostatica_junta"></td>
+                                <td><input type="text" name="resultado_junta"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-  <!-- Tabela ensaios -->
-  <table>
-    <thead>
-      <tr>
-        <th>Ensaio Realizado</th>
-        <th>Amostras</th>
-        <th>Método</th>
-        <th>Resultado</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Pressão Hidrostática (PHI)</td>
-        <td><input type="text"></td>
-        <td>0,5 Kgf/cm² x 5 min</td>
-        <td><input type="text"></td>
-      </tr>
-      <tr>
-        <td>Pressão Hidrostática (Junta elástica)</td>
-        <td><input type="text"></td>
-        <td>2 Kgf/cm² x 10 min</td>
-        <td><input type="text"></td>
-      </tr>
-      <tr>
-        <td>Vácuo</td>
-        <td><input type="text"></td>
-        <td>0,5 Kgf/cm² 15 min</td>
-        <td><input type="text"></td>
-      </tr>
-      <tr>
-        <td>Dimensional</td>
-        <td><input type="text"></td>
-        <td>Gabarito</td>
-        <td><input type="text"></td>
-      </tr>
-      <tr>
-        <td>Marcações</td>
-        <td><input type="text"></td>
-        <td>Visual</td>
-        <td><input type="text"></td>
-      </tr>
-      <tr>
-        <td>Achatamento</td>
-        <td><input type="text"></td>
-        <td>Deflexão de ( )30%</td>
-        <td><input type="text"></td>
-      </tr>
-      <tr>
-        <td>Comportamento ao calor</td>
-        <td><input type="text"></td>
-        <td>150° +/- 2° x 15 min</td>
-        <td><input type="text"></td>
-      </tr>
-    </tbody>
-  </table>
+                <p>Obs: Testes conforme NBR:
+                    <input type="checkbox" name="nbr_7362"> 7362
+                    <input type="checkbox" name="nbr_5688"> 5688
+                    <input type="checkbox" name="nbr_7665"> 7665
+                    <input type="checkbox" name="nbr_5647"> 5647
+                    <input type="checkbox" name="nbr_5648"> 5648
+                </p>
 
-  <!-- Observações -->
-  <div class="obs">
-    Obs: Testes conforme NBR:
-    <label><input type="checkbox"> 7362</label>
-    <label><input type="checkbox"> 5688</label>
-    <label><input type="checkbox"> 7665</label>
-    <label><input type="checkbox"> 5647</label>
-    <label><input type="checkbox"> 5648</label>
-    <br>
-    N/A: <strong>Não Aplicável</strong>
-  </div>
+                <fieldset>
+                    <legend>Identificação da(s) Amostra(s)</legend>
+                    <div id="amostras"></div>
+                    <button type="button" class="btn btn--secondary" id="btnAddAmostra">+ Adicionar amostra</button>
+                </fieldset>
 
-  <!-- Assinaturas -->
-  <div class="assinatura">
-    <div>
-      <p>Responsável pelos testes:</p>
-      <input type="text" placeholder="Qualidade">
-    </div>
-    <div>
-      <p>Responsável pela verificação:</p>
-      <input type="text" placeholder="Supervisor">
-    </div>
-  </div>
+                <label for="resultado">Resultado</label>
+                <select id="resultado">
+                    <option value="">Selecione...</option>
+                    <option value="aprovado">Aprovado</option>
+                    <option value="reprovado">Reprovado</option>
+                </select>
+            </form>
+        </div>
+    </main>
 
+    <footer class="rodape" role="contentinfo">
+        <div class="container">
+            <small>© <span id="ano"></span> Shiva Conexões — Relatórios digitais.</small>
+        </div>
+    </footer>
 </body>
+
 </html>
