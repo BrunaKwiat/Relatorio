@@ -1,674 +1,164 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro de Inspeção de Peças Acabadas</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-        h1 {
-            text-align: center;
-            font-size: 18px;
-            margin-bottom: 20px;
-        }
-        .header-info {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 20px;
-        }
-        .form-group {
-            margin-bottom: 15px;
-        }
-        label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-        }
-        input, select, textarea {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 8px;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        .test-row {
-            display: flex;
-            margin-bottom: 10px;
-        }
-        .test-row div {
-            flex: 1;
-            margin-right: 10px;
-        }
-        .test-row div:last-child {
-            margin-right: 0;
-        }
-        .nbr-checkboxes {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-        .nbr-checkbox {
-            display: flex;
-            align-items: center;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            padding: 10px 15px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .signature-area {
-            margin-top: 40px;
-            display: flex;
-            justify-content: space-between;
-        }
-        .signature-box {
-            width: 45%;
-            border-top: 1px solid #000;
-            padding-top: 5px;
-            text-align: center;
-        }
-        .hidden {
-            display: none;
-        }
-        #report {
-            margin-top: 30px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            background-color: #f9f9f9;
-        }
-        .print-button {
-            background-color: #2196F3;
-            margin-left: 10px;
-        }
-        .print-button:hover {
-            background-color: #0b7dda;
-        }
-        .image-upload {
-            margin: 20px 0;
-        }
-        .image-preview {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-top: 10px;
-        }
-        .image-preview-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .image-preview-item img {
-            max-width: 150px;
-            max-height: 150px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-        }
-        .image-name, .report-image-name {
-            margin-top: 5px;
-            font-size: 12px;
-            text-align: center;
-            word-break: break-all;
-            max-width: 150px;
-            padding: 2px 5px;
-            background-color: #f2f2f2;
-            border-radius: 3px;
-        }
-        .report-images {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin: 15px 0;
-        }
-        .report-image-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 10px;
-            width: calc(25% - 15px);
-        }
-        .report-image-item img {
-            max-width: 200px;
-            max-height: 200px;
-            border: 1px solid #ddd;
-        }
-        .report-image-name {
-            max-width: 200px;
-            background-color: #e9e9e9;
-        }
-        #productTable td, #productTable th {
-            padding: 4px 8px;
-        }
-        @media (max-width: 768px) {
-            .report-image-item {
-                width: calc(50% - 15px);
-            }
-        }
-         /* Estilos para os botões de exclusão */
-    .delete-row {
-        background-color: #f44336;
-        color: white;
-        border: none;
-        border-radius: 4px;
-        padding: 6px 10px;
-        cursor: pointer;
-        font-size: 12px;
-        width: 70px;
-        height: 32px;
-        box-sizing: border-box;
-    }
-
-    .delete-row:hover {
-        background-color: #d32f2f;
-    }
-
-    /* Ajustes para as colunas de ação */
-    #productTable th:nth-child(5),
-    #productTable td:nth-child(5),
-    #testsTable th:nth-child(5),
-    #testsTable td:nth-child(5) {
-        width: 80px;
-        text-align: center;
-        vertical-align: middle;
-    }
-
-    /* Ajuste de altura para inputs e selects */
-    #productTable input,
-    #testsTable select {
-        height: 32px;
-        box-sizing: border-box;
-    }
-
-    /* Alinhamento central para dados específicos */
-    #productTable td:nth-child(2),
-    #productTable td:nth-child(3),
-    #productTable td:nth-child(4),
-    #testsTable td:nth-child(2),
-    #testsTable td:nth-child(3),
-    #testsTable td:nth-child(4) {
-        text-align: center;
-    }
-    </style>
+    <title>RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</title>
+    <meta name="color-scheme" content="light only" />
+     <meta name="theme-color" content="#0E3554" />
+    <!-- CSS principal -->
+  <link rel="stylesheet" href="style.css" />
+              
+  <!-- jsPDF (para gerar PDF “texto”) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+                  
+  <!-- Script principal -->
+  <script src="script.js" defer></script>
+  </head>
 </head>
 <body>
-    <div class="container">
-        <h1>Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+    <h1>RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
+    
+    <form>
+        <p><strong>Nº da Ficha de Produção:</strong> <input type="text" name="numero_ficha"></p>
+        <p><strong>Data:</strong> <input type="date" name="data"></p>
+        <p><strong>Quantidade a verificar:</strong> Acima de 500 peças verificar plano de amostragem</p>
         
-        <form id="inspectionForm">
-            <div class="header-info">
-                <div class="form-group" style="width: 48%;">
-                    <label for="productionNumber">Nº da Ficha de Produção:</label>
-                    <input type="number" id="productionNumber" style="width: 120px;" required>
-                </div>
-                <div class="form-group" style="width: 48%;">
-                    <label for="inspectionDate">Data:</label>
-                    <input type="date" id="inspectionDate" style="width: 150px;" required>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="quantityToCheck">Quantidade a verificar:</label>
-                <input type="number" id="productionNumber">
-            </div>
-            
-            <div class="form-group">
-                <label for="whenToExecute">Quando executar a inspeção:</label>
-                <input type="number" id="productionNumber" >
-            </div>
-            
-           <h2>Informações do Produto</h2>
-            <table id="productTable" style="width: 100%; border-collapse: collapse;">
-    <thead>
-        <tr>
-            <th style="text-align: left;">Descrição do produto</th>
-            <th style="width: 80px; text-align: center;">Lote</th>
-            <th style="width: 120px; text-align: center;">Data</th>
-            <th style="width: 60px; text-align: center;">Quant.</th>
-            <th style="width: 80px; text-align: center;">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><input type="text" class="product-desc" style="width: 100%; height: 32px;" required></td>
-            <td><input type="text" class="product-lot" style="width: 100%; height: 32px; text-align: center;" required></td>
-            <td><input type="date" class="product-date" style="width: 100%; height: 32px; text-align: center;" required></td>
-            <td><input type="number" class="product-quantity" style="width: 100%; height: 32px; text-align: center;" required></td>
-            <td><button type="button" class="delete-row" title="Excluir" disabled>Excluir</button></td>
-        </tr>
-    </tbody>
-</table>
-            <button type="button" id="addProductRow">+ Adicionar outra linha</button>
-            
-            <h2>Ensaios Realizados</h2>
-            <table id="testsTable">
-    <thead>
-        <tr>
-            <th>Ensaio Realizado</th>
-            <th style="text-align: center;">Amostras</th>
-            <th style="text-align: center;">Método</th>
-            <th style="text-align: center;">Resultado</th>
-            <th style="text-align: center;">Ações</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>
-                <select class="test-name" style="height: 32px;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td>
-                <select class="test-samples" style="height: 32px; text-align: center;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td>
-                <select class="test-method" style="height: 32px; text-align: center;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td>
-                <select class="test-result" style="height: 32px; text-align: center;" required>
-                    <!-- opções mantidas -->
-                </select>
-            </td>
-            <td><button type="button" class="delete-row" title="Excluir" disabled>Excluir</button></td>
-        </tr>
-    </tbody>
-</table>
-            <button type="button" id="addTestRow">+ Adicionar outro ensaio</button>
-            
-            <div class="form-group">
-                <label>Obs: Testes conforme NBR:</label>
-                <div class="nbr-checkboxes">
-                    <div class="nbr-checkbox">
-                        <input type="checkbox" id="nbr7362" checked>
-                        <label for="nbr7362" style="font-weight: normal; margin-left: 5px;">7362</label>
-                    </div>
-                    <div class="nbr-checkbox">
-                        <input type="checkbox" id="nbr5688">
-                        <label for="nbr5688" style="font-weight: normal; margin-left: 5px;">5688</label>
-                    </div>
-                    <div class="nbr-checkbox">
-                        <input type="checkbox" id="nbr7665">
-                        <label for="nbr7665" style="font-weight: normal; margin-left: 5px;">7665</label>
-                    </div>
-                    <div class="nbr-checkbox">
-                        <input type="checkbox" id="nbr5647">
-                        <label for="nbr5647" style="font-weight: normal; margin-left: 5px;">5647</label>
-                    </div>
-                    <div class="nbr-checkbox">
-                        <input type="checkbox" id="nbr5648">
-                        <label for="nbr5648" style="font-weight: normal; margin-left: 5px;">5648</label>
-                    </div>
-                    
-                </div>
-            </div>
-            
-            <div class="form-group image-upload">
-                <label for="imageUpload">Anexar Fotos/Imagens:</label>
-                <input type="file" id="imageUpload" accept="image/*" multiple>
-                <div class="image-preview" id="imagePreview"></div>
-            </div>
-            
-            <div class="signature-area">
-                <div class="form-group signature-box">
-                    <label>Responsável pelos testes:</label>
-                    <input type="text" id="testResponsible" required>
-                </div>
-                <div class="form-group signature-box">
-                    <label>Responsável pela verificação:</label>
-                    <input type="text" id="verificationResponsible" required>
-                </div>
-            </div>
-            
-            <button type="button" id="generateReport">Gerar Relatório</button>
-        </form>
+        <h3>Quando executar a inspeção: Peças Acabadas</h3>
         
-        <div id="report" class="hidden">
-            <h1 id="reportTitle">RQ-504-01 Registro de Inspeção de Peças Acabadas por Lote Produzido</h1>
-            
-            <div class="header-info">
-                <div><strong>Nº da Ficha de Produção:</strong> <span id="reportProductionNumber"></span></div>
-                <div><strong>Data:</strong> <span id="reportInspectionDate"></span></div>
-            </div>
-            
-            <div>
-                <strong>Quantidade a verificar:</strong> <span id="reportQuantityToCheck"></span>
-            </div>
-            
-            <div>
-                <strong>Quando executar a inspeção:</strong> <span id="reportWhenToExecute"></span>
-            </div>
-            
-            <h2>Informações do Produto</h2>
-            <table id="reportProductTable">
-                <thead>
-                    <tr>
-                        <th>Descrição do produto</th>
-                        <th>Lote</th>
-                        <th>Data</th>
-                        <th>Quant.</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Produtos serão adicionados aqui pelo JavaScript -->
-                </tbody>
-            </table>
-            
-            <h2>Ensaios Realizados</h2>
-            <table id="reportTestsTable">
-                <thead>
-                    <tr>
-                        <th>Ensaio Realizado</th>
-                        <th>Amostras</th>
-                        <th>Método</th>
-                        <th>Resultado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- Testes serão adicionados aqui pelo JavaScript -->
-                </tbody>
-            </table>
-            
-            <div>
-                <strong>Obs: Testes conforme NBR:</strong> 
-                <span id="reportNbrs"></span>
-                <span> N/A: Não Aplicável</span>
-            </div>
-            
-            <div id="reportImagesContainer" style="margin-top: 20px;">
-                <h3>Imagens Anexadas:</h3>
-                <div class="report-images" id="reportImages"></div>
-            </div>
-            
-            <div class="signature-area">
-                <div class="signature-box">
-                    <div>Responsável pelos testes:</div>
-                    <div id="reportTestResponsible"></div>
-                </div>
-                <div class="signature-box">
-                    <div>Responsável pela verificação:</div>
-                    <div id="reportVerificationResponsible"></div>
-                </div>
-            </div>
-            
-            <button type="button" id="printReport" class="print-button">Imprimir Relatório</button>
-            <button type="button" id="backToForm">Voltar ao Formulário</button>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-        // Inserir os nomes automaticamente nos campos
-        document.getElementById('testResponsible').value = 'Mateus Anacleto';
-        document.getElementById('verificationResponsible').value = 'Cleverson Owsiany';
+        <table border="1">
+            <tr>
+                <th>Descrição do produto</th>
+                <th>Lote</th>
+                <th>Data</th>
+                <th>Quant.</th>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao1"></td>
+                <td><input type="text" name="lote1"></td>
+                <td><input type="date" name="data1"></td>
+                <td><input type="number" name="quantidade1"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao2"></td>
+                <td><input type="text" name="lote2"></td>
+                <td><input type="date" name="data2"></td>
+                <td><input type="number" name="quantidade2"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao3"></td>
+                <td><input type="text" name="lote3"></td>
+                <td><input type="date" name="data3"></td>
+                <td><input type="number" name="quantidade3"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao4"></td>
+                <td><input type="text" name="lote4"></td>
+                <td><input type="date" name="data4"></td>
+                <td><input type="number" name="quantidade4"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao5"></td>
+                <td><input type="text" name="lote5"></td>
+                <td><input type="date" name="data5"></td>
+                <td><input type="number" name="quantidade5"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao6"></td>
+                <td><input type="text" name="lote6"></td>
+                <td><input type="date" name="data6"></td>
+                <td><input type="number" name="quantidade6"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao7"></td>
+                <td><input type="text" name="lote7"></td>
+                <td><input type="date" name="data7"></td>
+                <td><input type="number" name="quantidade7"></td>
+            </tr>
+            <tr>
+                <td><input type="text" name="descricao8"></td>
+                <td><input type="text" name="lote8"></td>
+                <td><input type="date" name="data8"></td>
+                <td><input type="number" name="quantidade8"></td>
+            </tr>
+        </table>
         
-        const uploadedImages = [];
-            
-             document.getElementById('imageUpload').addEventListener('change', function(e) {
-                const files = e.target.files;
-                const previewContainer = document.getElementById('imagePreview');
-                previewContainer.innerHTML = '';
-                
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    if (!file.type.match('image.*')) continue;
-                    
-                    const reader = new FileReader();
-                    
-                    reader.onload = function(e) {
-                        uploadedImages.push({
-                            name: file.name,
-                            src: e.target.result
-                        });
-                        
-                        const previewItem = document.createElement('div');
-                        previewItem.className = 'image-preview-item';
-                        
-                        const img = document.createElement('img');
-                        img.src = e.target.result;
-                        
-                        const nameSpan = document.createElement('span');
-                        nameSpan.className = 'image-name';
-                        nameSpan.textContent = file.name.length > 20 ? 
-                            file.name.substring(0, 17) + '...' : 
-                            file.name;
-                        nameSpan.title = file.name;
-                        
-                        previewItem.appendChild(img);
-                        previewItem.appendChild(nameSpan);
-                        previewContainer.appendChild(previewItem);
-                    }
-                    
-                    reader.readAsDataURL(file);
-                }
-            });
-            
-            document.getElementById('addProductRow').addEventListener('click', function() {
-                const tbody = document.querySelector('#productTable tbody');
-                const newRow = document.createElement('tr');
-                newRow.innerHTML = `
-                     <td><input type="text" class="product-desc" required></td>
-                    <td><input type="text" class="product-lot" style="width: 100%;" required></td>
-                    <td><input type="date" class="product-date" style="width: 100%;" required></td>
-                    <td><input type="number" class="product-quantity" style="width: 100%;" required></td>
-                    <td><button type="button" class="delete-row" title="Excluir">Excluir</button></td>
-                `;
-                tbody.appendChild(newRow);
-            });
-            
-            document.getElementById('addTestRow').addEventListener('click', function() {
-                const tbody = document.querySelector('#testsTable tbody');
-                const newRow = document.createElement('tr');
-               newRow.innerHTML = `
-    <td>
-        <select class="test-name" required>
-            <option value="Pressão Hidrostática (PHI)" selected>Pressão Hidrostática (PHI)</option>
-            <option value="Pressão Hidrostática (Junta elástica)">Pressão Hidrostática (Junta elástica)</option>
-            <option value="Vácuo">Vácuo</option>
-            <option value="Dimensional">Dimensional</option>
-            <option value="Marcações">Marcações</option>
-            <option value="Achatamento">Achatamento</option>
-            <option value="Comportamento ao calor">Comportamento ao calor</option>
-        </select>
-    </td>
-    <td>
-        <select class="test-samples" required>
-            <option value="03" selected>03</option>
-            <option value="05">05</option>
-            <option value="10">10</option>
-            <option value="15">15</option>
-            <option value="20">20</option>
-            <option value="Plano de amostragem">Plano de amostragem</option>
-        </select>
-    </td>
-    <td>
-        <select class="test-method" required>
-            <option value="0,5 Kgf/cm³ x 5 min" selected>0,5 Kgf/cm³ x 5 min</option>
-            <option value="1,0 Kgf/cm³ x 5 min">1,0 Kgf/cm³ x 5 min</option>
-            <option value="1,5 Kgf/cm³ x 5 min">1,5 Kgf/cm³ x 5 min</option>
-            <option value="2,0 Kgf/cm³ x 5 min">2,0 Kgf/cm³ x 5 min</option>
-            <option value="0,5 Kgf/cm³ x 10 min">0,5 Kgf/cm³ x 10 min</option>
-            <option value="1,0 Kgf/cm³ x 10 min">1,0 Kgf/cm³ x 10 min</option>
-            <option value="1,5 Kgf/cm³ x 10 min">1,5 Kgf/cm³ x 10 min</option>
-            <option value="2,0 Kgf/cm³ x 10 min">2,0 Kgf/cm³ x 10 min</option>
-            <option value="Outro método">Outro método</option>
-        </select>
-    </td>
-    <td>
-        <select class="test-result" required>
-            <option value="APROVADO">APROVADO</option>
-            <option value="REPROVADO">REPROVADO</option>
-            <option value="N/A">N/A</option>
-        </select>
-    </td>
-    <td><button type="button" class="delete-row" title="Excluir">Excluir</button></td>
-`;
+        <br>
+        
+        <table border="1">
+            <tr>
+                <th>Ensaio Realizado</th>
+                <th>Amostras</th>
+                <th>Método</th>
+                <th>Resultado</th>
+            </tr>
+            <tr>
+                <td>Pressão Hidrostática (PHI)</td>
+                <td>0,5 Kgf/cm² x 5 min</td>
+                <td><input type="checkbox" name="pressao_hidrostatica_phi"></td>
+                <td><input type="text" name="resultado_phi"></td>
+            </tr>
+            <tr>
+                <td>Pressão Hidrostática (Junta elástica)</td>
+                <td>2 Kgf/cm² x 10 min</td>
+                <td><input type="checkbox" name="pressao_hidrostatica_junta"></td>
+                <td><input type="text" name="resultado_junta"></td>
+            </tr>
+            <tr>
+                <td>Vácuo</td>
+                <td>0,5 Kgf/cm² 15 min</td>
+                <td><input type="checkbox" name="vacuo"></td>
+                <td><input type="text" name="resultado_vacuo"></td>
+            </tr>
+            <tr>
+                <td>Dimensional</td>
+                <td>Gabarito</td>
+                <td><input type="checkbox" name="dimensional"></td>
+                <td><input type="text" name="resultado_dimensional"></td>
+            </tr>
+            <tr>
+                <td>Marcações</td>
+                <td>Visual</td>
+                <td><input type="checkbox" name="marcacoes"></td>
+                <td><input type="text" name="resultado_marcacoes"></td>
+            </tr>
+            <tr>
+                <td>Achatamento</td>
+                <td>Deflexão de ( )30%</td>
+                <td><input type="checkbox" name="achatamento"></td>
+                <td><input type="text" name="resultado_achatamento"></td>
+            </tr>
+            <tr>
+                <td>Comportamento ao calor</td>
+                <td>150° +/- 2° x 15 min</td>
+                <td><input type="checkbox" name="comportamento_calor"></td>
+                <td><input type="text" name="resultado_comportamento_calor"></td>
+            </tr>
+        </table>
+        
+        <p>Obs: Testes conforme NBR: 
+            <input type="checkbox" name="nbr_7362"> 7362 
+            <input type="checkbox" name="nbr_5688"> 5688 
+            <input type="checkbox" name="nbr_7665"> 7665 
+            <input type="checkbox" name="nbr_5647"> 5647 
+            <input type="checkbox" name="nbr_5648"> 5648
+        </p>
+        <p>N/A: <strong>Não Aplicável</strong></p>
+        
+        <hr>
+        
+        <p>Responsável pelos testes:</p>
+        <p>________________________<br>
+        Qualidade</p>
+        
+        <p>Responsável pela verificação:</p>
+        <p>________________________<br>
+        Supervisor</p>
+    </form>
 
-                tbody.appendChild(newRow);
-            });
-            
-            document.getElementById('generateReport').addEventListener('click', function() {
-                if (!document.getElementById('inspectionForm').checkValidity()) {
-                    alert('Por favor, preencha todos os campos obrigatórios.');
-                    return;
-                }
-                
-                document.getElementById('reportProductionNumber').textContent = 
-                    document.getElementById('productionNumber').value;
-                
-                const inspectionDate = new Date(document.getElementById('inspectionDate').value);
-                document.getElementById('reportInspectionDate').textContent = 
-                    inspectionDate.toLocaleDateString('pt-BR');
-                
-                document.getElementById('reportQuantityToCheck').textContent = 
-                    document.getElementById('quantityToCheck').value;
-                
-                document.getElementById('reportWhenToExecute').textContent = 
-                    document.getElementById('whenToExecute').value;
-                
-                const productTableBody = document.querySelector('#reportProductTable tbody');
-                productTableBody.innerHTML = '';
-                
-                const productRows = document.querySelectorAll('#productTable tbody tr');
-                productRows.forEach(row => {
-                    const desc = row.querySelector('.product-desc').value;
-                    const lot = row.querySelector('.product-lot').value;
-                    const date = new Date(row.querySelector('.product-date').value);
-                    const quant = row.querySelector('.product-quantity').value;
-                    
-                    if (desc && lot && date && quant) {
-                        const newRow = document.createElement('tr');
-                        newRow.innerHTML = `
-                            <td>${desc}</td>
-                            <td>${lot}</td>
-                            <td>${date.toLocaleDateString('pt-BR')}</td>
-                            <td>${quant}</td>
-                        `;
-                        productTableBody.appendChild(newRow);
-                    }
-                });
-                
-                const testsTableBody = document.querySelector('#reportTestsTable tbody');
-                testsTableBody.innerHTML = '';
-                
-                const testRows = document.querySelectorAll('#testsTable tbody tr');
-                testRows.forEach(row => {
-                    const name = row.querySelector('.test-name').value;
-                    const samples = row.querySelector('.test-samples').value;
-                    const method = row.querySelector('.test-method').value;
-                    const result = row.querySelector('.test-result').value;
-                    
-                    if (name && samples && method && result) {
-                        const newRow = document.createElement('tr');
-                        newRow.innerHTML = `
-                            <td>${name}</td>
-                            <td>${samples}</td>
-                            <td>${method}</td>
-                            <td>${result}</td>
-                        `;
-                        testsTableBody.appendChild(newRow);
-                    }
-                });
-                
-                const nbrs = [];
-                if (document.getElementById('nbr7362').checked) nbrs.push('7362');
-                if (document.getElementById('nbr5688').checked) nbrs.push('5688');
-                if (document.getElementById('nbr7665').checked) nbrs.push('7665');
-                if (document.getElementById('nbr5647').checked) nbrs.push('5647');
-                if (document.getElementById('nbr5648').checked) nbrs.push('5648');
-                
-                let nbrsText = '';
-                if (nbrs.length > 0) {
-                    nbrsText = '(X) ' + nbrs.join(' ( ) ') + ' ( ) ';
-                }
-                document.getElementById('reportNbrs').textContent = nbrsText;
-                
-                document.getElementById('reportTestResponsible').textContent = 
-                    document.getElementById('testResponsible').value;
-                
-                document.getElementById('reportVerificationResponsible').textContent = 
-                    document.getElementById('verificationResponsible').value;
-                
-                const reportImagesContainer = document.getElementById('reportImages');
-                reportImagesContainer.innerHTML = '';
-                
-                if (uploadedImages.length > 0) {
-                    document.getElementById('reportImagesContainer').style.display = 'block';
-                    
-                    uploadedImages.forEach(image => {
-                        const imageItem = document.createElement('div');
-                        imageItem.className = 'report-image-item';
-                        
-                        const img = document.createElement('img');
-                        img.src = image.src;
-                        
-                        const nameSpan = document.createElement('span');
-                        nameSpan.className = 'report-image-name';
-                        nameSpan.textContent = image.name.length > 25 ? 
-                            image.name.substring(0, 22) + '...' : 
-                            image.name;
-                        nameSpan.title = image.name;
-                        
-                        imageItem.appendChild(img);
-                        imageItem.appendChild(nameSpan);
-                        reportImagesContainer.appendChild(imageItem);
-                    });
-                } else {
-                    document.getElementById('reportImagesContainer').style.display = 'none';
-                }
-                
-                document.getElementById('inspectionForm').classList.add('hidden');
-                document.getElementById('report').classList.remove('hidden');
-            });
-            
-            document.getElementById('backToForm').addEventListener('click', function() {
-                document.getElementById('inspectionForm').classList.remove('hidden');
-                document.getElementById('report').classList.add('hidden');
-            });
-            
-            document.getElementById('printReport').addEventListener('click', function() {
-                window.print();
-            });
-        });
-        document.addEventListener('click', function(e) {
-    if (e.target.classList.contains('delete-row')) {
-        const row = e.target.closest('tr');
-        if (row) row.remove();
-    }
-});
-
-    </script>
+    <footer class="rodape" role="contentinfo">
+            <div class="container">
+                  <small>© <span id="ano"></span> Shiva Conexões — Relatórios digitais.</small>
+            </div>
+      </footer>
 </body>
 </html>
